@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Edzők – {brand}</title>
-<meta name="description" content="Személyi edzők és online coachok a GymBro edzőkeresőjében: város, edzőterem, szakterület, nyelv és ár szerint.">
+<title>Csomagok edzőknek – {brand}</title>
+<meta name="description" content="A GymBro edzői csomagjai: Alap, Pro és Prémium.">
 <link rel="icon" href="../assets/logo.png">
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/icons.css">
@@ -80,55 +80,23 @@
   .intro h1 { font-size: clamp(40px, 6vw, 72px); }
   .intro p { color: var(--soft); max-width: 60ch; margin: 14px 0 0; }
 
-  /* szűrők */
-  .filters { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 10px; margin: 18px 0 8px; }
-  .filters label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 600; }
-  .filters input, .filters select {
-    font: 16px Barlow, sans-serif; color: var(--text); background: var(--card);
-    border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; width: 100%; }
-  .more summary { cursor: pointer; color: var(--red); font-weight: 700; margin: 4px 0 8px; }
-  .more-filters { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 8px; }
-  .more-filters label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 600; }
-  .more-filters select {
-    font: 16px Barlow, sans-serif; color: var(--text); background: var(--card);
-    border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; width: 100%; }
-  .count { color: var(--muted); font-size: 14px; margin: 6px 0 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  .count button { font: 600 14px Barlow, sans-serif; color: var(--red); background: none; border: 0; cursor: pointer; padding: 0; }
-
-  /* edzők */
-  .list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding-bottom: 40px; }
-  .coach { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px;
-           display: flex; gap: 16px; text-decoration: none; }
-  .coach:hover { border-color: var(--muted); }
-  .avatar { flex: none; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; display: grid; place-items: center;
-            background: rgba(229,72,77,.16); color: var(--red); font: 700 26px "Barlow Condensed", sans-serif; }
-  .avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .coach h3 { font-size: 24px; display: flex; gap: 6px; align-items: center; }
-  [data-theme="light"] .coach h3 { font-size: 20px; }
-  .muted { color: var(--muted); font-size: 15px; }
-  .verified { color: var(--green); }
-  .featured { font-size: 12px; font-weight: 700; border: 1px solid currentColor; border-radius: 6px; padding: 0 6px; }
-  .rating { font-weight: 700; }
-  .rating-box { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; margin: 12px 0; }
-  .rating-box .muted { margin: 6px 0 0; font-size: 14px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
-  .chips span { background: var(--chip); border-radius: 999px; padding: 3px 12px; font-size: 14px; }
-
-  /* egy edző */
-  .detail { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 28px; margin: 18px 0 40px; }
-  .detail .head { display: flex; gap: 18px; align-items: center; }
-  .detail .avatar { width: 96px; height: 96px; font-size: 40px; }
-  .detail h2 { font-size: clamp(32px, 4vw, 48px); }
-  .detail .bio { white-space: pre-line; margin: 18px 0 6px; }
-  .detail dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 16px 0; }
-  .detail dt { color: var(--muted); font-weight: 600; }
-  .detail dd { margin: 0; }
-  .contacts, .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-  .note { color: var(--muted); font-size: 14px; margin-top: 16px; }
-  .back { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-weight: 700; color: var(--red);
-          text-decoration: none; }
-  .state { text-align: center; color: var(--muted); padding: 48px 0; }
-  .plans-link { color: var(--red); font-weight: 700; text-decoration: none; }
+  .intro { padding: 48px 0 20px; }
+  .intro h1 { font-size: clamp(40px, 6vw, 72px); }
+  .intro p { color: var(--soft); max-width: 62ch; margin: 14px 0 0; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0 28px; }
+  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px; }
+  .plan.featured { border-color: var(--red); }
+  .plan h2 { font-size: 34px; }
+  .price { font: 700 26px Barlow, sans-serif; margin: 10px 0 2px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .soon { font-size: 12px; font-weight: 700; border: 1px solid currentColor; border-radius: 6px; padding: 0 6px; color: var(--muted); }
+  .soon.free { color: var(--green); }
+  .year { color: var(--muted); font-size: 14px; }
+  .plan ul { margin: 14px 0 0; padding-left: 18px; color: var(--soft); }
+  .plan li { margin: 6px 0; }
+  .info { background: var(--bg2); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; margin: 0 0 14px; }
+  .info h3 { font-size: 24px; margin-bottom: 6px; }
+  .info p { margin: 0; color: var(--soft); }
+  .back { display: inline-flex; margin: 10px 0 40px; font-weight: 700; color: var(--red); text-decoration: none; }
 
   footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
   footer .wrap { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
@@ -136,12 +104,7 @@
 
   @media (max-width: 860px) {
     nav .hide-sm { display: none; }
-    .filters, .more-filters { grid-template-columns: 1fr 1fr; }
-    .filters .search { grid-column: 1 / -1; }
-    .list { grid-template-columns: 1fr; }
-    .detail .head { flex-direction: column; align-items: flex-start; }
-    .detail dl { grid-template-columns: 1fr; gap: 0; }
-    .detail dd { margin-bottom: 10px; }
+    .plans { grid-template-columns: 1fr; }
     footer nav { margin-left: 0; }
   }
 </style>
@@ -152,6 +115,7 @@
     <a class="logo" href="../"><img src="../assets/logo.png" alt=""><span data-brand>GymBro</span></a>
     <nav>
       <a class="hide-sm" href="../" data-i18n="navHome">Főoldal</a>
+      <a class="hide-sm" href="./" data-i18n="navCoaches">Edzők</a>
       <button class="lang-btn" type="button" data-lang-toggle data-i18n="otherLang">English</button>
       <button class="icon-btn" type="button" data-theme-toggle title="Világos téma" aria-label="Világos téma">
         <span class="mi only-dark i-light-mode"></span>
@@ -162,13 +126,52 @@
 </header>
 
 <main class="wrap">
-  <div class="intro" id="intro">
-    <div class="eyebrow" data-i18n="coachesEyebrow">Edzőkereső</div>
-    <h1 data-i18n="coachesTitle">Találd meg az edződ</h1>
-    <p data-i18n="coachesLead">Személyi edzők és online coachok, akik a GymBro-ban jelentkeztek, és akiket jóváhagytunk. A keresés a böngésződben történik: nem küldjük el, mit kerestél.</p>
-    <p><a class="plans-link" href="csomagok.html" data-i18n="coachesPlansLink">Edző vagy? Csomagok edzőknek →</a></p>
+  <div class="intro">
+    <div class="eyebrow" data-i18n="plansEyebrow">Edzőknek</div>
+    <h1 data-i18n="plansTitle">Csomagok edzőknek</h1>
+    <p data-i18n="plansLead">Az edzőkereső és a gyakorlatvideók alapból ingyenesek. A Pro és a Prémium több videót ad, a Prémium „Kiemelt” jelölést is.</p>
   </div>
-  <div id="view"><p class="state" data-i18n="coachesLoading">Betöltés…</p></div>
+  <div class="plans">
+    <section class="plan">
+      <h2 data-i18n="planBasic">Alap</h2>
+      <div class="price"><span data-i18n="planBasicPrice">0 Ft</span> <span class="soon free" data-i18n="plansFree">Ingyenes</span></div>
+      <ul>
+        <li data-i18n="planListing">Profil az edzőkeresőben (appban és itt)</li>
+        <li data-i18n="planVideos10">10 gyakorlatvideó, gyakorlatonként 1</li>
+        <li data-i18n="planRatings">Értékelések és „Ellenőrzött végzettség” jelvény</li>
+      </ul>
+    </section>
+    <section class="plan">
+      <h2 data-i18n="planPro">Pro</h2>
+      <div class="price"><span data-i18n="planProPrice">1 990 Ft / hó</span> <span class="soon" data-i18n="plansSoon">Hamarosan</span></div>
+      <div class="year" data-i18n="planProYear">vagy 18 990 Ft / év (5 € / hó, 49 € / év)</div>
+      <ul>
+        <li data-i18n="planListing">Profil az edzőkeresőben (appban és itt)</li>
+        <li data-i18n="planVideos30">30 gyakorlatvideó, gyakorlatonként 2</li>
+        <li data-i18n="planRatings">Értékelések és „Ellenőrzött végzettség” jelvény</li>
+      </ul>
+    </section>
+    <section class="plan featured">
+      <h2 data-i18n="planPremium">Prémium</h2>
+      <div class="price"><span data-i18n="planPremiumPrice">4 490 Ft / hó</span> <span class="soon" data-i18n="plansSoon">Hamarosan</span></div>
+      <div class="year" data-i18n="planPremiumYear">vagy 44 990 Ft / év (12 € / hó, 119 € / év)</div>
+      <ul>
+        <li data-i18n="planListing">Profil az edzőkeresőben (appban és itt)</li>
+        <li data-i18n="planVideos100">100 gyakorlatvideó, gyakorlatonként 3</li>
+        <li data-i18n="planRatings">Értékelések és „Ellenőrzött végzettség” jelvény</li>
+        <li data-i18n="planFeatured">„Kiemelt” jelölés: a videóid nagyobb eséllyel kerülnek előre, és a keresőben kicsit előrébb vagy</li>
+      </ul>
+    </section>
+  </div>
+  <section class="info">
+    <h3 data-i18n="plansHowTitle">Hogyan kapom meg?</h3>
+    <p data-i18n="plansHowText">A fizetés még nem indult el. Addig a szintet az appban kérheted (Profil → Online fiók → Edzőprofilom → Szint kérése), és ha a jóváhagyó megadja, ingyen kapod meg egy időre. Az első edzők alapítóként 12 hónap Pro szintet kapnak.</p>
+  </section>
+  <section class="info">
+    <h3 data-i18n="plansFairTitle">Tisztességes kiemelés</h3>
+    <p data-i18n="plansFairText">A kiemelés mindig jelölve van. A kiemelt helyek legalább 30%-a a többi edzőé, és az ellenőrzött végzettségű edzők, valamint a felhasználók kedvencei így is elöl maradnak.</p>
+  </section>
+  <a class="back" href="./" data-i18n="plansBack">← Vissza az edzőkhöz</a>
 </main>
 
 <footer>
@@ -182,6 +185,5 @@
 </footer>
 <script src="../brand.js"></script>
 <script src="../i18n.js"></script>
-<script type="module" src="edzok.js"></script>
 </body>
 </html>
