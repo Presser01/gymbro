@@ -35,6 +35,16 @@ const T = {
     priceUpTo: (p) => `${p} Ft-ig`,
     onlineNote: 'Az online edzők a helytől függetlenül látszanak.',
     moreFilters: 'További szűrők',
+    sortRating: 'Értékelés szerint',
+    minStars: 'Értékelés legalább',
+    stars: (v) => `${v} ★`,
+    ratingLine: (avg, n) => `${avg} ★ (${n} értékelés)`,
+    ratingFew: 'Még kevés értékelés',
+    rateInApp: 'Értékelni az appban lehet, online fiókkal. Másoknak csak az összesítés látszik, 3 értékelés után.',
+    tags: {
+      explains: 'Jól magyaráz', motivating: 'Motiváló', precise: 'Pontos', flexible: 'Rugalmas',
+      technique: 'Jó technika', patient: 'Türelmes', effective: 'Eredményes', value: 'Jó ár-érték',
+    },
     verified: 'Ellenőrzött végzettség',
     selfDeclared: 'az edző saját nyilatkozata',
     session: 'Alkalom',
@@ -92,6 +102,16 @@ const T = {
     priceUpTo: (p) => `up to ${p} HUF`,
     onlineNote: 'Online coaches show regardless of place.',
     moreFilters: 'More filters',
+    sortRating: 'By rating',
+    minStars: 'Rating at least',
+    stars: (v) => `${v} ★`,
+    ratingLine: (avg, n) => `${avg} ★ (${n === 1 ? '1 rating' : `${n} ratings`})`,
+    ratingFew: 'Not enough ratings yet',
+    rateInApp: 'You can rate in the app with an online account. Others only see the totals, after 3 ratings.',
+    tags: {
+      explains: 'Explains well', motivating: 'Motivating', precise: 'Precise', flexible: 'Flexible',
+      technique: 'Good technique', patient: 'Patient', effective: 'Gets results', value: 'Good value',
+    },
     verified: 'Verified qualification',
     selfDeclared: "the coach's own statement",
     session: 'Session',
@@ -130,6 +150,11 @@ const LANGUAGES = {
 };
 const SPECIALTIES = Object.keys(T.hu.specialties);
 const PRICES = [5000, 8000, 10000, 15000, 20000];
+const STARS = [3, 3.5, 4, 4.5];
+// A súlyozott értékelés, mint az appban (lib/domain/coach_finder.dart):
+// ennyi „képzeletbeli” közepes értékeléssel kezdünk.
+const RATING_PRIOR = 3.5;
+const RATING_PRIOR_WEIGHT = 5;
 
 const view = document.getElementById('view');
 const intro = document.getElementById('intro');
@@ -137,7 +162,7 @@ let coaches = null;
 let loadError = false;
 // A szűrők csak erre a látogatásra (a weboldal csak a nyelvet, a témát és a
 // stílust jegyzi meg; adatvédelmi tájékoztató).
-const filter = { q: '', mode: 'any', county: '', city: '', specialty: '', language: '', maxPrice: '', gym: '', sort: 'mixed' };
+const filter = { q: '', mode: 'any', county: '', city: '', specialty: '', language: '', maxPrice: '', gym: '', minStars: '', sort: 'mixed' };
 // A „További szűrők” nyitva van-e (újrarajzoláskor is maradjon).
 let moreOpen = false;
 
@@ -233,6 +258,28 @@ function specialtyNames(c) {
   ];
 }
 
+const rated = (c) => c.rating_count != null && c.rating_avg != null;
+
+function score(c) {
+  return rated(c)
+    ? (RATING_PRIOR_WEIGHT * RATING_PRIOR + c.rating_count * c.rating_avg) / (RATING_PRIOR_WEIGHT + c.rating_count)
+    : RATING_PRIOR;
+}
+
+function ratingLine(c) {
+  if (!rated(c)) return null;
+  const avg = new Intl.NumberFormat(lang() === 'hu' ? 'hu-HU' : 'en-GB', {
+    minimumFractionDigits: 1, maximumFractionDigits: 1,
+  }).format(c.rating_avg);
+  return t().ratingLine(avg, c.rating_count);
+}
+
+function topTags(c) {
+  return Object.entries(c.rating_tags ?? {})
+    .filter(([k]) => k in T.hu.tags)
+    .sort((a, b) => b[1] - a[1] || Object.keys(T.hu.tags).indexOf(a[0]) - Object.keys(T.hu.tags).indexOf(b[0]));
+}
+
 function priceLine(c) {
   const tt = t();
   return [
@@ -258,6 +305,7 @@ function matches(c) {
   if (filter.specialty && !(c.specialties ?? []).includes(filter.specialty)) return false;
   if (filter.language && !(c.languages ?? []).includes(filter.language)) return false;
   if (filter.maxPrice && c.price_session && c.price_session > Number(filter.maxPrice)) return false;
+  if (filter.minStars && (!rated(c) || c.rating_avg < Number(filter.minStars))) return false;
   if (filter.gym && !(c.gyms ?? []).some((g) => fold(g) === fold(filter.gym))) return false;
   const q = fold(filter.q.trim());
   if (q) {
@@ -272,12 +320,29 @@ function sorted(list) {
   const day = today();
   const key = new Map(list.map((c) => [c.slug, hash(`${day}|${c.slug}`)]));
   const priceKnown = (c) => (filter.maxPrice && !c.price_session ? 1 : 0);
+  // Ajánlott (mint az appban): súlyozott értékelés + az újak lendülete (2
+  // hónapig) + napi kis keverés (±0,25).
+  const d = new Date();
+  const freshFrom = d.getFullYear() * 12 + d.getMonth() - 2;
+  const monthIndex = (s) => {
+    const m = /^(\d{4})-(\d{2})/.exec(s ?? '');
+    return m ? Number(m[1]) * 12 + Number(m[2]) - 1 : -Infinity;
+  };
+  const mixed = (c) => score(c) + (monthIndex(c.since) >= freshFrom ? 0.3 : 0)
+    + (key.get(c.slug) % 1000) / 1000 * 0.5 - 0.25;
   return [...list].sort((a, b) => {
     const k = priceKnown(a) - priceKnown(b);
     if (k) return k;
     if (filter.sort === 'mixed') {
       const v = (b.verified_label ? 1 : 0) - (a.verified_label ? 1 : 0);
       if (v) return v;
+      const m = mixed(b) - mixed(a);
+      if (m) return m;
+    } else if (filter.sort === 'rating') {
+      const r = (rated(b) ? 1 : 0) - (rated(a) ? 1 : 0);
+      if (r) return r;
+      const sc = score(b) - score(a);
+      if (sc) return sc;
     } else if (filter.sort === 'price') {
       const pa = a.price_session ?? Infinity;
       const pb = b.price_session ?? Infinity;
@@ -341,9 +406,9 @@ function renderList() {
     el('label', { class: 'search' }, tt.search, search),
     select(tt.how, 'mode', [['any', tt.both], ['inPerson', tt.inPerson], ['online', tt.online]], filter.mode, set('mode')),
     select(tt.specialty, 'specialty', [any, ...SPECIALTIES.map((s) => [s, tt.specialties[s]])], filter.specialty, set('specialty')),
-    select(tt.order, 'sort', [['mixed', tt.sortMixed], ['price', tt.sortPrice], ['newest', tt.sortNewest]], filter.sort, set('sort')),
+    select(tt.order, 'sort', [['mixed', tt.sortMixed], ['rating', tt.sortRating], ['price', tt.sortPrice], ['newest', tt.sortNewest]], filter.sort, set('sort')),
   );
-  const moreSet = ['county', 'city', 'language', 'maxPrice', 'gym'].filter((k) => filter[k]).length;
+  const moreSet = ['county', 'city', 'language', 'maxPrice', 'gym', 'minStars'].filter((k) => filter[k]).length;
   const more = el('details', { class: 'more', open: moreOpen || moreSet ? '' : null },
     el('summary', {}, moreSet ? `${tt.moreFilters} (${moreSet})` : tt.moreFilters),
     el('div', { class: 'more-filters' },
@@ -351,6 +416,7 @@ function renderList() {
       filter.mode === 'online' ? null : select(tt.city, 'city', [any, ...cities.map((c) => [c, c])], filter.city, set('city')),
       select(tt.language, 'language', [any, ...languages.map((c) => [c, LANGUAGES[c] ?? c])], filter.language, set('language')),
       select(tt.maxPrice, 'maxPrice', [any, ...PRICES.map((p) => [String(p), tt.priceUpTo(money(p))])], filter.maxPrice, set('maxPrice')),
+      select(tt.minStars, 'minStars', [any, ...STARS.map((v) => [String(v), tt.stars(new Intl.NumberFormat(lang() === 'hu' ? 'hu-HU' : 'en-GB', { minimumFractionDigits: 1 }).format(v))])], filter.minStars, set('minStars')),
       gyms.length ? select(tt.gym, 'gym', [any, ...gyms.map((g) => [g, g])], filter.gym, set('gym')) : null));
   more.addEventListener('toggle', () => {
     moreOpen = more.open;
@@ -368,7 +434,7 @@ function renderResults() {
   const clear = el('button', {
     type: 'button',
     onclick: () => {
-      Object.assign(filter, { q: '', mode: 'any', county: '', city: '', specialty: '', language: '', maxPrice: '', gym: '' });
+      Object.assign(filter, { q: '', mode: 'any', county: '', city: '', specialty: '', language: '', maxPrice: '', gym: '', minStars: '' });
       renderList();
     },
   }, tt.clear);
@@ -377,15 +443,17 @@ function renderResults() {
     return;
   }
   results.replaceChildren(
-    el('div', { class: 'count' }, `${tt.count(found.length)} · ${{ mixed: tt.sortMixed, price: tt.sortPrice, newest: tt.sortNewest }[filter.sort]}`, clear),
+    el('div', { class: 'count' }, `${tt.count(found.length)} · ${{ mixed: tt.sortMixed, rating: tt.sortRating, price: tt.sortPrice, newest: tt.sortNewest }[filter.sort]}`, clear),
     el('div', { class: 'list' }, found.map((c) => {
       const price = priceLine(c);
+      const rating = ratingLine(c);
       return el('a', { class: 'coach', href: `#${encodeURIComponent(c.slug)}` },
         avatar(c),
         el('div', {},
           el('h3', {}, c.display_name, c.verified_label
             ? el('span', { class: 'mi i-check-circle verified', title: tt.verified, 'aria-label': tt.verified }) : null),
           el('div', { class: 'muted' }, placeLine(c)),
+          rating ? el('div', { class: 'rating' }, rating) : null,
           el('div', {}, specialtyNames(c).join(' · ')),
           price ? el('div', { class: 'muted' }, price) : null));
     })),
@@ -437,6 +505,12 @@ function renderDetail(slug) {
       el('div', { class: 'muted' }, placeLine(c)))),
     el('p', { class: 'bio' }, c.bio),
     el('div', { class: 'chips' }, specialtyNames(c).map((s) => el('span', {}, s))),
+    el('div', { class: 'rating-box' },
+      el('div', { class: 'rating' }, ratingLine(c) ?? tt.ratingFew),
+      topTags(c).length
+        ? el('div', { class: 'chips' }, topTags(c).map(([k, n]) => el('span', {}, `${tt.tags[k]} · ${n}`)))
+        : null,
+      el('p', { class: 'muted' }, tt.rateInApp)),
     el('dl', {}, rows),
     el('div', { class: 'contacts' }, contacts),
     el('p', { class: 'note' }, tt.contactNote),
