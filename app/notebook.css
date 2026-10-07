@@ -1,0 +1,207 @@
+/* Füzet stílus a webes nézetben (Tamás döntése, 2026-10-07): kockás lap
+   piros margóval és spirállal, minden szöveg kézírás (Caveat), kék toll vagy
+   grafit. A tollal húzott keretek egy SVG-szűrőtől (#nb-sketch, index.html)
+   lesznek remegősek; a címek kiíródnak, az aláhúzások és pipák kirajzolódnak.
+   Bekapcsolva: <html data-style="notebook" data-pen="blue|graphite">. */
+
+[data-style="notebook"] {
+  --hand: Caveat, "Segoe Print", cursive;
+  --head: var(--hand); --head-weight: 700; --head-case: none;
+}
+[data-style="notebook"][data-theme="light"] {
+  --bg: #fbfaf6; --bg2: #f1efe8; --card: #ffffff; --line: rgba(31, 79, 180, .42);
+  --text: #1b3577; --muted: #5a6b95; --header: rgba(251, 250, 246, .93);
+  --red: #d3423a; --red2: #e0574f; --green: #2e8b57; --warn: #b7791f;
+  --ink: #1f4fb4; --cta-bg: var(--ink); --cta-fg: #fff; --cta-hover: #2a5cc4;
+  --track: #cfccc2; --grid: rgba(31, 79, 180, .12);
+  --paper-grid: #d3e0ee; --margin: #e59a9a; --hole: #e2ded4; --wire: #9ea3ab;
+  --postit: #fff1a8; --postit-text: #3a3416; --tape: rgba(230, 217, 172, .72);
+}
+[data-style="notebook"][data-theme="light"][data-pen="graphite"] {
+  --bg: #fafaf8; --text: #2a2b2f; --muted: #74767c; --line: rgba(58, 60, 65, .4);
+  --ink: #3a3c41; --cta-hover: #4a4c52; --paper-grid: #dcdcd9; --red: #c4514a; --green: #3e8758;
+  --grid: rgba(58, 60, 65, .12);
+}
+[data-style="notebook"][data-theme="dark"] {
+  --bg: #1b1d22; --bg2: #2c3038; --card: #24272e; --line: rgba(142, 181, 255, .38);
+  --text: #d3e0ff; --muted: #93a3c6; --header: rgba(27, 29, 34, .93);
+  --red: #ff7a70; --red2: #ff8f86; --green: #5cd69a; --warn: #f5b800;
+  --ink: #8eb5ff; --cta-bg: var(--ink); --cta-fg: #0f1a33; --cta-hover: #a5c4ff;
+  --track: #4a505b; --grid: rgba(142, 181, 255, .12);
+  --paper-grid: #283141; --margin: #7a3b3b; --hole: #0e0f12; --wire: #6b7078;
+  --postit: #4a4426; --postit-text: #f3ebc2; --tape: rgba(216, 204, 160, .3);
+}
+[data-style="notebook"][data-theme="dark"][data-pen="graphite"] {
+  --text: #e8e9ec; --muted: #9c9fa6; --line: rgba(210, 213, 219, .38);
+  --ink: #d2d5db; --cta-fg: #1b1d22; --cta-hover: #e2e4e8; --paper-grid: #2d3036;
+  --grid: rgba(210, 213, 219, .12);
+}
+
+/* A lap: spirál (lyuk + drót), piros margó, kockák. */
+[data-style="notebook"] body,
+.nb-intro {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 6px 14px, var(--hole) 0 2.8px, transparent 3.3px),
+    radial-gradient(circle at -3px 9px, transparent 0 6.5px, var(--wire) 7px 8.6px, transparent 9px),
+    linear-gradient(90deg, transparent 12px, var(--margin) 12px 13.5px, transparent 13.5px),
+    linear-gradient(var(--paper-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
+  background-size: 14px 28px, 14px 28px, 14px 100%, 20px 20px, 20px 20px;
+  background-repeat: repeat-y, repeat-y, repeat-y, repeat, repeat;
+}
+[data-style="notebook"] body { font: 500 18px/1.5 var(--hand); }
+[data-style="notebook"] :is(.btn, .lang-btn, input, select, .logo, h4, .month, .toast) {
+  font-family: var(--hand);
+}
+[data-style="notebook"] .chart .axis { font: 500 14px var(--hand); }
+[data-style="notebook"] h3 { font-size: 23px; color: var(--ink); }
+[data-style="notebook"] h4 { font-size: 20px; color: var(--red); letter-spacing: 0; text-transform: none; font-weight: 700; }
+[data-style="notebook"] .month { font-size: 21px; letter-spacing: 0; text-transform: none; color: var(--red); font-weight: 700; }
+[data-style="notebook"] .small { font-size: 15.5px; }
+[data-style="notebook"] .logo { font-weight: 700; font-size: 26px; color: var(--ink); }
+[data-style="notebook"] .backup-at { padding-right: 6px; font-size: 16px; }
+[data-style="notebook"] .tile b { font-size: 32px; color: var(--ink); }
+[data-style="notebook"] .rank .pos { color: var(--ink); }
+
+/* Tollal húzott keretek: a keret egy külön réteg, csak azt torzítja a szűrő
+   (a szöveg éles marad). */
+[data-style="notebook"] :is(.card, .tile, .medal, .rank li, .btn, .icon-btn) {
+  position: relative; border-color: transparent;
+}
+[data-style="notebook"] :is(.card, .tile, .medal, .rank li, .btn, .icon-btn)::before {
+  content: ''; position: absolute; inset: -1px; pointer-events: none;
+  border: 1.4px solid var(--line); border-radius: inherit; filter: url(#nb-sketch);
+}
+[data-style="notebook"] :is(.card, .tile) { border-radius: 10px; box-shadow: 1px 2px 0 rgba(0, 0, 0, .06); }
+[data-style="notebook"] .medal { border-radius: 10px; background: var(--card); }
+[data-style="notebook"] .rank li { border-radius: 10px; background: var(--card); }
+[data-style="notebook"] .rank li.me { outline: none; }
+[data-style="notebook"] .rank li.me::before { border-color: var(--red); border-width: 1.8px; }
+[data-style="notebook"] .btn { border-radius: 14px; }
+[data-style="notebook"] .btn.primary::before { border-color: var(--cta-bg); }
+[data-style="notebook"] .icon-btn { color: var(--ink); }
+[data-style="notebook"] .medal .mi { width: 28px; height: 28px; }
+
+/* Minden cetli be van ragasztva (Tamás kérése, 2026-10-07): a kártyák
+   tetején egy csík (változó helyen és szögben), a csempéken a sarkon. */
+[data-style="notebook"] :is(.card, .tile)::after {
+  content: ''; position: absolute; pointer-events: none; z-index: 1;
+  width: 66px; height: 19px; top: -9px; right: 22%; transform: rotate(-3deg);
+  background: var(--tape);
+  clip-path: polygon(0 0, 100% 0, 97% 20%, 100% 40%, 97% 60%, 100% 80%, 97% 100%, 0 100%, 3% 80%, 0 60%, 3% 40%, 0 20%);
+}
+[data-style="notebook"] .card:nth-of-type(3n+2)::after { right: auto; left: 46%; transform: rotate(2.5deg); }
+[data-style="notebook"] .card:nth-of-type(3n)::after { right: 34%; transform: rotate(-1.5deg); }
+[data-style="notebook"] .tile::after { width: 44px; height: 14px; top: -3px; right: -12px; transform: rotate(38deg); }
+[data-style="notebook"] .tile:nth-child(even)::after { right: auto; left: -12px; transform: rotate(-38deg); }
+[data-style="notebook"] .login-card::after { right: 50%; transform: translateX(50%) rotate(-2deg); }
+
+/* Fejléc: alatta kézzel húzott vonal. */
+[data-style="notebook"] .top { border-bottom-color: transparent; }
+[data-style="notebook"] .top::after {
+  content: ''; position: absolute; left: 14px; right: 8px; bottom: -1px;
+  border-bottom: 1.4px solid var(--line); filter: url(#nb-sketch);
+}
+
+/* Vonalra írunk. */
+[data-style="notebook"] .login-card input {
+  font-size: 19px; border: 0; border-bottom: 1.5px solid var(--muted); border-radius: 0;
+  background: transparent; padding: 8px 4px;
+}
+[data-style="notebook"] .login-card input:focus { outline: none; border-bottom: 2.2px solid var(--ink); }
+[data-style="notebook"] .login-card .lock { color: var(--ink); }
+[data-style="notebook"] .login-card h1 { justify-self: start; }
+[data-style="notebook"] select { background: var(--card); }
+
+/* Menü: a kiválasztott tollal bekarikázva. */
+[data-style="notebook"] :is(.side, .tabs) a.active { position: relative; background: transparent; border-color: transparent; color: var(--ink); }
+[data-style="notebook"] :is(.side, .tabs) a.active .mi { color: var(--ink); }
+[data-style="notebook"] :is(.side, .tabs) a.active::after {
+  content: ''; position: absolute; inset: 1px -2px; pointer-events: none;
+  border: 1.8px solid var(--red); border-radius: 50%; filter: url(#nb-sketch);
+  animation: nb-draw .45s ease-out both;
+}
+[data-style="notebook"] .tabs { border-top-color: transparent; }
+[data-style="notebook"] .tabs a { font-size: 15px; }
+
+/* A cím kiíródik, utána piros tollal aláhúzódik. */
+[data-style="notebook"] h1 {
+  /* A dőlt kézírás kilóg a betűdobozból: jobbra hely kell (a maszk vág). */
+  display: inline-block; position: relative; padding: 0 10px 8px 0; color: var(--ink);
+  -webkit-mask: linear-gradient(90deg, #000 45%, transparent 55%) 0 0 / 250% 100% no-repeat;
+  mask: linear-gradient(90deg, #000 45%, transparent 55%) 0 0 / 250% 100% no-repeat;
+  animation: nb-write .55s ease-in-out both;
+}
+[data-style="notebook"] h1::after,
+.nb-intro b::after {
+  content: ''; position: absolute; left: -2px; right: -6px; bottom: 0; height: 9px; background: var(--red);
+  -webkit-mask: var(--nb-underline) 0 0 / 100% 100% no-repeat;
+  mask: var(--nb-underline) 0 0 / 100% 100% no-repeat;
+  animation: nb-draw .3s .4s ease-out both;
+}
+[data-style="notebook"] {
+  --nb-underline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 9' preserveAspectRatio='none'%3E%3Cpath d='M1 6 C 18 4 34 7 52 5 S 84 3 99 4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --nb-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 13 Q 6.5 15.5 9 20.5 Q 13.5 10 22.5 3' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --nb-ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.5 C 6 3.6 3.4 8 3.6 12.4 C 3.8 17.4 7.6 20.6 12.3 20.4 C 17.4 20.2 20.6 16.6 20.4 11.6 C 20.2 7.2 16.8 3.4 11 4.2' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Étkezésnapló: a megevett tétel kipipálva, a tervezett előtt üres karika. */
+[data-style="notebook"] .foods li > span:first-child::before {
+  content: ''; display: inline-block; width: 1.1em; height: 1.1em; margin-right: 6px; vertical-align: -0.2em;
+  background: var(--green); -webkit-mask: var(--nb-check) center / contain no-repeat; mask: var(--nb-check) center / contain no-repeat;
+  animation: nb-draw .4s .25s ease-out both;
+}
+[data-style="notebook"] .foods li.planned > span:first-child::before {
+  background: var(--muted); -webkit-mask-image: var(--nb-ring); mask-image: var(--nb-ring); animation: none;
+}
+[data-style="notebook"] .foods li.planned > span:first-child { font-style: normal; }
+
+/* Sávok: üres ceruzás keret, a kitöltés satírozott. */
+[data-style="notebook"] .track { background: transparent; overflow: visible; border-radius: 3px; height: 11px; }
+[data-style="notebook"] .track::before {
+  content: ''; position: absolute; inset: 0; border: 1.2px solid var(--track); border-radius: 3px; filter: url(#nb-sketch);
+}
+[data-style="notebook"] .fill {
+  --c: var(--ink); border: 1.3px solid var(--c); border-radius: 3px;
+  background: repeating-linear-gradient(-55deg, var(--c) 0 1.4px, transparent 1.4px 4px);
+}
+[data-style="notebook"] .fill.ok { --c: var(--green); }
+[data-style="notebook"] .fill.over { --c: var(--warn); }
+[data-style="notebook"] .track i { background: var(--text); }
+
+/* Grafikonok: satírozott oszlopok, ceruzás rácsvonalak. */
+[data-style="notebook"] .chart .grid { stroke: var(--grid); stroke-dasharray: 5 4; }
+[data-style="notebook"] .chart .bar { fill: url(#nb-hatch); stroke: var(--ink); stroke-width: 1.4; opacity: .7; filter: url(#nb-sketch); }
+[data-style="notebook"] .chart .bar.now { opacity: 1; }
+[data-style="notebook"] .chart .line { stroke: var(--ink); filter: url(#nb-sketch-soft); }
+[data-style="notebook"] .chart .dot { fill: var(--ink); }
+
+/* Az üzenet egy sárga öntapadós cetli. */
+[data-style="notebook"] .toast { background: var(--postit); color: var(--postit-text); border-radius: 4px; font-size: 18px; }
+
+/* Belépés után a „GymBro” felíródik és aláhúzódik, aztán a lap elhalványul. */
+.nb-intro {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; pointer-events: none;
+  animation: nb-fade .22s .8s ease-in both;
+}
+.nb-intro b {
+  position: relative; padding-bottom: 12px; font: 700 clamp(64px, 12vw, 120px)/1 var(--hand); color: var(--ink);
+  -webkit-mask: linear-gradient(90deg, #000 45%, transparent 55%) 0 0 / 250% 100% no-repeat;
+  mask: linear-gradient(90deg, #000 45%, transparent 55%) 0 0 / 250% 100% no-repeat;
+  animation: nb-write .55s ease-in-out both;
+}
+.nb-intro b::after { height: 14px; animation-delay: .5s; }
+
+@keyframes nb-write {
+  from { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+  to { -webkit-mask-position: 0 0; mask-position: 0 0; }
+}
+@keyframes nb-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes nb-fade { to { opacity: 0; visibility: hidden; } }
+
+/* Ha a gépen ki vannak kapcsolva az animációk: minden rögtön kész. */
+@media (prefers-reduced-motion: reduce) {
+  [data-style="notebook"] *, [data-style="notebook"] *::before, [data-style="notebook"] *::after { animation: none !important; }
+  .nb-intro { display: none; }
+}

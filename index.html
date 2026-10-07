@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="hu" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{brand} – edzésnapló Androidra</title>
+<meta name="description" content="Offline edzésnapló, ami az adataidat a telefonodon tartja: edzés, kardió, étrend, érmek és barátok. Reklám és követés nélkül.">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/icons.css">
+<script>
+  // A téma már az első kirajzolás előtt (ne villanjon): a mentett választás,
+  // különben a rendszer beállítása.
+  (function () {
+    var t = new URLSearchParams(location.search).get('theme');
+    if (t !== 'light' && t !== 'dark') {
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+    }
+    if (t !== 'light' && t !== 'dark') {
+      t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+<style>
+  /* Sötét téma: az „A” vázlat (sportos). */
+  :root, [data-theme="dark"] {
+    --bg: #0d0e10; --bg2: #121317; --card: #1a1b20; --line: #2a2b31;
+    --text: #f3f3f5; --muted: #9b9ca3; --soft: #c9cad0; --header: rgba(13,14,16,.82);
+    --red: #e5484d; --red2: #ff6b5b; --green: #2ec56b;
+    --cta-bg: var(--red); --cta-fg: #fff; --cta-hover: var(--red2);
+    --frame: #222329; --shadow: 0 30px 80px rgba(0,0,0,.6);
+    --glow: rgba(229,72,77,.22); --stripe: rgba(255,255,255,.018);
+    --head: "Barlow Condensed", Barlow, sans-serif; --head-weight: 700;
+    --head-case: uppercase; --head-spacing: -.01em;
+    color-scheme: dark;
+  }
+  /* Világos téma: a „B” vázlat (letisztult). */
+  [data-theme="light"] {
+    --bg: #fbfbfc; --bg2: #f2f2f4; --card: #ffffff; --line: #e6e6ea;
+    --text: #111214; --muted: #66676e; --soft: #3d3e44; --header: rgba(251,251,252,.86);
+    --cta-bg: #111214; --cta-fg: #fff; --cta-hover: #2b2c31;
+    --frame: #e3e3e8; --shadow: 0 30px 60px -20px rgba(17,18,20,.35);
+    --glow: rgba(229,72,77,.10); --stripe: rgba(0,0,0,.022);
+    --head: Barlow, system-ui, sans-serif; --head-weight: 600;
+    --head-case: none; --head-spacing: -.02em;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 17px/1.6 Barlow, system-ui, sans-serif; transition: background .2s, color .2s; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3 { font-family: var(--head); font-weight: var(--head-weight); letter-spacing: var(--head-spacing);
+               line-height: 1.05; margin: 0; }
+  h1, h2 { text-transform: var(--head-case); }
+  .eyebrow { color: var(--red); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 13px; }
+  .mi { width: 22px; height: 22px; }
+
+  /* fejléc */
+  header { position: sticky; top: 0; z-index: 10; background: var(--header);
+           backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 18px; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none;
+          font-family: "Barlow Condensed"; font-weight: 700; font-size: 24px; letter-spacing: .02em; }
+  .logo img { width: 34px; height: 34px; border-radius: 9px; }
+  nav { margin-left: auto; display: flex; gap: 20px; align-items: center; font-weight: 600; font-size: 15px; }
+  nav a { text-decoration: none; color: var(--muted); }
+  nav a:hover { color: var(--text); }
+  .icon-btn { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+              border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; padding: 0; }
+  .icon-btn:hover { background: var(--bg2); }
+  .lang-btn { font: 600 14px Barlow, sans-serif; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 6px; }
+  .lang-btn:hover { color: var(--text); }
+  [data-theme="dark"] .only-light, [data-theme="light"] .only-dark { display: none; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px;
+         font-weight: 700; text-decoration: none; border: 1.5px solid var(--line); }
+  [data-theme="light"] .btn { border-radius: 12px; }
+  .btn.primary { background: var(--cta-bg); border-color: var(--cta-bg); color: var(--cta-fg); }
+  .btn.primary:hover { background: var(--cta-hover); }
+  .btn.small { padding: 8px 16px; font-size: 14px; }
+
+  /* hős */
+  .hero { position: relative; overflow: hidden; padding: 72px 0 40px;
+          background:
+            radial-gradient(800px 400px at 85% 10%, var(--glow), transparent 60%),
+            repeating-linear-gradient(-55deg, transparent 0 22px, var(--stripe) 22px 23px); }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+  .hero h1 { font-size: clamp(46px, 7.2vw, 92px); }
+  [data-theme="light"] .hero h1 { font-size: clamp(42px, 6.2vw, 76px); }
+  .hero h1 em { font-style: normal; color: var(--red); }
+  .hero p.lead { color: var(--soft); font-size: 20px; max-width: 34ch; margin: 22px 0 28px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .badges { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 28px; color: var(--muted); font-size: 14px; font-weight: 600; }
+  .badges span::before { content: "●"; color: var(--green); margin-right: 6px; }
+  .phones { position: relative; height: 560px; }
+  .phone { position: absolute; width: 250px; border-radius: 34px; overflow: hidden;
+           border: 8px solid var(--frame); box-shadow: var(--shadow); background: #000; }
+  .phone img { display: block; width: 100%; }
+  .phone.p1 { right: 150px; top: 30px; transform: rotate(-6deg); }
+  .phone.p2 { right: 0; top: 0; transform: rotate(5deg); }
+
+  /* számok */
+  .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg2); }
+  .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat { padding: 26px 10px; text-align: center; }
+  .stat b { display: block; font-family: "Barlow Condensed"; font-size: 40px; }
+  .stat span { color: var(--muted); font-size: 14px; }
+
+  section { padding: 84px 0; }
+  .sec-head { max-width: 640px; margin-bottom: 40px; }
+  .sec-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 8px; }
+  [data-theme="light"] .sec-head h2 { font-size: clamp(32px, 4.5vw, 48px); }
+
+  /* funkciók */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 26px; }
+  .card .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+               background: rgba(229,72,77,.14); color: var(--red); margin-bottom: 16px; }
+  .card h3 { font-size: 26px; margin-bottom: 8px; }
+  [data-theme="light"] .card h3 { font-size: 21px; }
+  .card p { margin: 0; color: var(--muted); }
+
+  /* galéria */
+  .gallery { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 12px; scroll-snap-type: x mandatory; }
+  .gallery figure { flex: 0 0 220px; margin: 0; scroll-snap-align: start; }
+  .gallery img { width: 100%; border-radius: 22px; border: 6px solid var(--frame); display: block; }
+  .gallery figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; text-align: center; }
+
+  /* adatvédelem */
+  .privacy { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .privacy .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .checks li { display: flex; gap: 12px; }
+  .checks .mi { color: var(--green); flex: none; margin-top: 3px; }
+  .more { display: inline-block; margin-top: 20px; color: var(--red); font-weight: 700; }
+
+  /* webes nézet és letöltés */
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 48px 24px; text-align: center;
+           background-image: radial-gradient(500px 200px at 50% 0, var(--glow), transparent 70%); }
+  .panel h2 { font-size: clamp(32px, 4.5vw, 52px); margin-top: 8px; }
+  [data-theme="light"] .panel h2 { font-size: clamp(30px, 4vw, 44px); }
+  .panel p { color: var(--muted); max-width: 54ch; margin: 14px auto 26px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer nav { margin-left: auto; font-weight: 500; }
+
+  @media (max-width: 860px) {
+    nav .hide-sm { display: none; }
+    .hero { padding-top: 44px; }
+    .hero .wrap, .privacy .wrap, .two { grid-template-columns: 1fr; }
+    .phones { height: 420px; overflow: hidden; }
+    .phone { width: 180px; }
+    .phone.p1 { right: auto; left: calc(50% - 170px); }
+    .phone.p2 { right: calc(50% - 170px); }
+    .grid { grid-template-columns: 1fr; }
+    .stats .wrap { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 60px 0; }
+    footer nav { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><img src="assets/logo.png" alt=""><span data-brand>GymBro</span></a>
+    <nav>
+      <a class="hide-sm" href="#funkciok" data-i18n="navFeatures">Funkciók</a>
+      <a class="hide-sm" href="#adatvedelem" data-i18n="navPrivacy">Adatvédelem</a>
+      <a class="hide-sm" href="#web" data-i18n="navWeb">Webes nézet</a>
+      <button class="lang-btn" type="button" data-lang-toggle data-i18n="otherLang">English</button>
+      <button class="icon-btn" type="button" data-theme-toggle title="Világos téma" aria-label="Világos téma">
+        <span class="mi only-dark i-light-mode"></span>
+        <span class="mi only-light i-dark-mode"></span>
+      </button>
+      <a class="btn primary small" href="#letoltes" data-i18n="navDownload">Letöltés</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-i18n="heroEyebrow">Edzésnapló Androidra</div>
+      <h1><span data-i18n="heroTitleA">Edzés. Kardió.</span> <em data-i18n="heroTitleB">Étrend.</em> <span data-i18n="heroTitleC">Egy helyen.</span></h1>
+      <p class="lead" data-i18n="heroLead">Offline edzésnapló, ami az adataidat a telefonodon tartja. Fiók nélkül is teljes – reklám és követés nélkül.</p>
+      <div class="cta">
+        <a class="btn primary" href="#letoltes"><span class="mi i-download"></span><span data-i18n="ctaDownload">Letöltés Androidra</span></a>
+        <a class="btn" href="app/" data-i18n="ctaWeb">Naplóm a weben</a>
+      </div>
+      <div class="badges">
+        <span data-i18n="badgeFree">Ingyenes</span>
+        <span data-i18n="badgeLang">Magyarul és angolul</span>
+        <span data-i18n="badgeNoAds">Nincs reklám</span>
+      </div>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="phone p1"><img data-screen="02_session" src="assets/screens/hu_02_session.webp" alt=""></div>
+      <div class="phone p2"><img data-screen="01_home" src="assets/screens/hu_01_home.webp" alt=""></div>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><b>876</b><span data-i18n="statExercises">gyakorlat izomtérképpel</span></div>
+    <div class="stat"><b>200+</b><span data-i18n="statFoods">alapanyag tápértékkel</span></div>
+    <div class="stat"><b>56</b><span data-i18n="statMedals">érem-szint</span></div>
+    <div class="stat"><b>0</b><span data-i18n="statAds">reklám és követés</span></div>
+  </div>
+</div>
+
+<section id="funkciok">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" data-i18n="featEyebrow">Funkciók</div>
+      <h2 data-i18n="featTitle">Minden, ami egy edzéshez kell</h2>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="ico"><span class="mi i-fitness-center"></span></div><h3 data-i18n="f1Title">Edzésnapló</h3><p data-i18n="f1Text">Tervek, sorozatok, rekordok. Az app súlyt javasol, figyeli az elakadást, és szól, ha deload kell.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-directions-run"></span></div><h3 data-i18n="f2Title">Kardió és HIIT</h3><p data-i18n="f2Text">Kezdő futóprogram, stopper szakaszokkal, HIIT-időzítő és becsült kalória – lezárt képernyőn is pontosan.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-restaurant-menu"></span></div><h3 data-i18n="f3Title">Étrend</h3><p data-i18n="f3Text">Heti terv, receptek, bevásárlólista, vonalkód-olvasó és makrók egy pillantással.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-emoji-events"></span></div><h3 data-i18n="f4Title">Érmek és kihívások</h3><p data-i18n="f4Text">Napi kihívás, bronz–gyémánt érmek és heti sorozat, hogy legyen kedved holnap is.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-groups"></span></div><h3 data-i18n="f5Title">Barátok</h3><p data-i18n="f5Text">Heti rangsor, gratulációk és közös kihívások – a részletes naplód soha nem látszik.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-lock"></span></div><h3 data-i18n="f6Title">Titkosított mentés</h3><p data-i18n="f6Text">Végponttól végpontig titkosítva: a kulcs csak nálad van, a szerver sem tudja elolvasni.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="gallery">
+      <figure><img data-screen="01_home" src="assets/screens/hu_01_home.webp" alt="" loading="lazy"><figcaption data-i18n="capHome">Főlap</figcaption></figure>
+      <figure><img data-screen="02_session" src="assets/screens/hu_02_session.webp" alt="" loading="lazy"><figcaption data-i18n="capSession">Edzés közben</figcaption></figure>
+      <figure><img data-screen="04_stats" src="assets/screens/hu_04_stats.webp" alt="" loading="lazy"><figcaption data-i18n="capStats">Statisztika</figcaption></figure>
+      <figure><img data-screen="06_diet" src="assets/screens/hu_06_diet.webp" alt="" loading="lazy"><figcaption data-i18n="capDiet">Étrend</figcaption></figure>
+      <figure><img data-screen="07_run" src="assets/screens/hu_07_run.webp" alt="" loading="lazy"><figcaption data-i18n="capRun">Futás</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="privacy" id="adatvedelem">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-i18n="privEyebrow">Adatvédelem</div>
+      <h2 style="font-size:clamp(34px,5vw,56px);margin-top:8px" data-i18n="privTitle">A te adatod a tiéd</h2>
+      <a class="more" href="privacy/index.html#hu" data-href-lang="privacy/index.html#{lang}" data-i18n="privMore">Adatvédelmi tájékoztató</a>
+    </div>
+    <ul class="checks">
+      <li><span class="mi i-check-circle"></span><span data-i18n="priv1">Fiók nélkül az app semmit nem küld sehova – minden a telefonodon marad.</span></li>
+      <li><span class="mi i-check-circle"></span><span data-i18n="priv2">Nincs reklám, analitika vagy adateladás.</span></li>
+      <li><span class="mi i-check-circle"></span><span data-i18n="priv3">Az online fiók nem kötelező; a mentés végponttól végpontig titkosított.</span></li>
+      <li><span class="mi i-check-circle"></span><span data-i18n="priv4">A szerver az EU-ban van; az adataidat bármikor letöltheted vagy törölheted.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div class="panel" id="web">
+      <div class="eyebrow" data-i18n="webEyebrow">Webes nézet</div>
+      <h2 data-i18n="webTitle">Nézd meg a naplód a böngészőben</h2>
+      <p data-i18n="webText">Lépj be az online fiókoddal: a titkosított mentésed a böngésződben nyílik ki, a kulcs nem hagyja el a gépedet. Napló, statisztika, barátok – nagy képernyőn.</p>
+      <a class="btn primary" href="app/" data-i18n="webLogin">Belépés</a>
+    </div>
+    <div class="panel" id="letoltes">
+      <div class="eyebrow" data-i18n="dlEyebrow">Letöltés</div>
+      <h2 data-i18n="dlTitle">Hamarosan a Google Playen</h2>
+      <p data-i18n="dlText">A GymBro jelenleg zárt tesztben van. Ha szeretnéd kipróbálni, írj nekünk.</p>
+      <a class="btn" href="#" data-contact><span class="mi i-mail-outline"></span><span data-i18n="dlContact">Jelentkezés a tesztre</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <span data-brand>GymBro</span></span>
+    <nav>
+      <a href="privacy/index.html#hu" data-href-lang="privacy/index.html#{lang}" data-i18n="footPrivacy">Adatvédelem</a>
+      <a href="privacy/delete.html#hu" data-href-lang="privacy/delete.html#{lang}" data-i18n="footDelete">Fióktörlés</a>
+      <a href="#" data-contact data-i18n="footContact">Kapcsolat</a>
+    </nav>
+  </div>
+</footer>
+<script src="brand.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>
