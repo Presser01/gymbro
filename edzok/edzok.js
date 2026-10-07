@@ -46,6 +46,8 @@ const T = {
       technique: 'Jó technika', patient: 'Türelmes', effective: 'Eredményes', value: 'Jó ár-érték',
     },
     verified: 'Ellenőrzött végzettség',
+    featured: 'Kiemelt',
+    featuredInfo: 'Kiemelt: Prémium szintű edző. Az Ajánlott sorrendben kicsit előrébb kerül; az ellenőrzött végzettségűek így is elöl vannak.',
     selfDeclared: 'az edző saját nyilatkozata',
     session: 'Alkalom',
     month: 'Online havi',
@@ -113,6 +115,8 @@ const T = {
       technique: 'Good technique', patient: 'Patient', effective: 'Gets results', value: 'Good value',
     },
     verified: 'Verified qualification',
+    featured: 'Featured',
+    featuredInfo: 'Featured: a Premium-level coach. They appear a little higher in the Recommended order; coaches with a verified qualification still come first.',
     selfDeclared: "the coach's own statement",
     session: 'Session',
     month: 'Online monthly',
@@ -260,6 +264,10 @@ function specialtyNames(c) {
 
 const rated = (c) => c.rating_count != null && c.rating_avg != null;
 
+// A „Kiemelt” (Prémium szintű) edző előnye az Ajánlott sorrendben (mint az
+// appban: lib/domain/coach_finder.dart kFeaturedBoost).
+const FEATURED_BOOST = 0.4;
+
 function score(c) {
   return rated(c)
     ? (RATING_PRIOR_WEIGHT * RATING_PRIOR + c.rating_count * c.rating_avg) / (RATING_PRIOR_WEIGHT + c.rating_count)
@@ -320,15 +328,16 @@ function sorted(list) {
   const day = today();
   const key = new Map(list.map((c) => [c.slug, hash(`${day}|${c.slug}`)]));
   const priceKnown = (c) => (filter.maxPrice && !c.price_session ? 1 : 0);
-  // Ajánlott (mint az appban): súlyozott értékelés + az újak lendülete (2
-  // hónapig) + napi kis keverés (±0,25).
+  // Ajánlott (mint az appban): súlyozott értékelés + „Kiemelt” (+0,4) + az
+  // újak lendülete (2 hónapig) + napi kis keverés (±0,25).
   const d = new Date();
   const freshFrom = d.getFullYear() * 12 + d.getMonth() - 2;
   const monthIndex = (s) => {
     const m = /^(\d{4})-(\d{2})/.exec(s ?? '');
     return m ? Number(m[1]) * 12 + Number(m[2]) - 1 : -Infinity;
   };
-  const mixed = (c) => score(c) + (monthIndex(c.since) >= freshFrom ? 0.3 : 0)
+  const mixed = (c) => score(c) + (c.featured ? FEATURED_BOOST : 0)
+    + (monthIndex(c.since) >= freshFrom ? 0.3 : 0)
     + (key.get(c.slug) % 1000) / 1000 * 0.5 - 0.25;
   return [...list].sort((a, b) => {
     const k = priceKnown(a) - priceKnown(b);
@@ -451,7 +460,8 @@ function renderResults() {
         avatar(c),
         el('div', {},
           el('h3', {}, c.display_name, c.verified_label
-            ? el('span', { class: 'mi i-check-circle verified', title: tt.verified, 'aria-label': tt.verified }) : null),
+            ? el('span', { class: 'mi i-check-circle verified', title: tt.verified, 'aria-label': tt.verified }) : null,
+          c.featured ? el('span', { class: 'featured', title: tt.featuredInfo }, tt.featured) : null),
           el('div', { class: 'muted' }, placeLine(c)),
           rating ? el('div', { class: 'rating' }, rating) : null,
           el('div', {}, specialtyNames(c).join(' · ')),
@@ -502,7 +512,8 @@ function renderDetail(slug) {
   view.replaceChildren(el('div', { class: 'detail' },
     el('div', { class: 'head' }, avatar(c), el('div', {},
       el('h2', {}, c.display_name),
-      el('div', { class: 'muted' }, placeLine(c)))),
+      el('div', { class: 'muted' }, placeLine(c)),
+      c.featured ? el('p', { class: 'muted' }, el('span', { class: 'featured' }, tt.featured), ' ', tt.featuredInfo) : null)),
     el('p', { class: 'bio' }, c.bio),
     el('div', { class: 'chips' }, specialtyNames(c).map((s) => el('span', {}, s))),
     el('div', { class: 'rating-box' },
