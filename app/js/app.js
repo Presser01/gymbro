@@ -51,7 +51,7 @@ let lang = (() => {
   return (navigator.language || 'hu').toLowerCase().startsWith('hu') ? 'hu' : 'en';
 })();
 
-const brand = () => (typeof BRAND === 'object' ? BRAND.name : 'GymBro');
+const brand = () => (typeof BRAND === 'object' ? BRAND.name : 'Raidmate');
 
 function t(key, vars = {}) {
   let s = TEXTS[lang][key] ?? TEXTS.hu[key] ?? key;
@@ -123,7 +123,7 @@ function followApp(model) {
   applyStatic();
 }
 
-/// Belépéskor (és átkapcsoláskor) a „GymBro” felíródik a lapra.
+/// Belépéskor (és átkapcsoláskor) a „Raidmate” felíródik a lapra.
 function playIntro() {
   if (!isNotebook() || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelector('.nb-intro')?.remove();

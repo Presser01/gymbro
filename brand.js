@@ -2,7 +2,7 @@
 // változik, csak ezt kell átírni. (A cím az appban a lib/core/submission.dart
 // kContactEmail konstansa; a kettőt együtt kell módosítani.)
 const BRAND = {
-  name: 'GymBro',
+  name: 'Raidmate',
   contactEmail: ['7991samatigetzsereP', 'moc.liamg'].map((s) => [...s].reverse().join('')).join('@'),
 };
 

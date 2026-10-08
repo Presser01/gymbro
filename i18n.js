@@ -10,7 +10,7 @@ const TEXTS = {
     navHome: 'Főoldal',
     coachesEyebrow: 'Edzőkereső',
     coachesTitle: 'Találd meg az edződ',
-    coachesLead: 'Személyi edzők és online coachok, akik a {brand}-ban jelentkeztek, és akiket jóváhagytunk. A keresés a böngésződben történik: nem küldjük el, mit kerestél.',
+    coachesLead: 'Személyi edzők és online coachok, akik a {brand}-ben jelentkeztek, és akiket jóváhagytunk. A keresés a böngésződben történik: nem küldjük el, mit kerestél.',
     coachesLoading: 'Betöltés…',
     coachesPlansLink: 'Edző vagy? Csomagok edzőknek →',
     plansEyebrow: 'Edzőknek',
@@ -215,7 +215,7 @@ function currentLang() {
 
 function applyLang(lang) {
   const t = TEXTS[lang];
-  const brand = typeof BRAND === 'object' ? BRAND.name : 'GymBro';
+  const brand = typeof BRAND === 'object' ? BRAND.name : 'Raidmate';
   document.documentElement.lang = lang;
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const v = t[el.dataset.i18n];
