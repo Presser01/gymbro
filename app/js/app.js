@@ -85,10 +85,12 @@ function applyStatic() {
     b.title = label;
     b.setAttribute('aria-label', label);
   });
+  // A gomb a következő stílust mutatja.
   const style = $('#styleToggle');
-  style.title = t(isNotebook() ? 'stylePlain' : 'styleNotebook');
-  style.setAttribute('aria-label', t('styleNotebook'));
-  style.setAttribute('aria-pressed', String(isNotebook()));
+  const next = STYLES[(STYLES.indexOf(currentStyle()) + 1) % STYLES.length];
+  const key = { plain: 'stylePlain', notebook: 'styleNotebook', viking: 'styleViking', oled: 'styleOled' }[next];
+  style.title = t(key);
+  style.setAttribute('aria-label', t(key));
 }
 
 // ------------------------------------------------- Füzet stílus
@@ -96,30 +98,45 @@ function applyStatic() {
 // mentésben lévő beállításból), de a fejlécben átkapcsolható, és a böngésző
 // ezt megjegyzi.
 
-const isNotebook = () => document.documentElement.dataset.style === 'notebook';
+// A stílusok sorban (a fejléc gombja ebben a sorrendben lép tovább). A
+// Viking és az OLED csak sötét (2026-10-13).
+const STYLES = ['plain', 'notebook', 'viking', 'oled'];
+const DARK_ONLY = ['viking', 'oled'];
+const currentStyle = () => document.documentElement.dataset.style ?? 'plain';
+const isNotebook = () => currentStyle() === 'notebook';
 
-function setNotebook(on, pen) {
+function setStyle(style, pen) {
   const root = document.documentElement;
-  if (on) {
-    root.dataset.style = 'notebook';
-    root.dataset.pen = pen === 'graphite' ? 'graphite' : 'blue';
-  } else {
+  if (style === 'plain' || !STYLES.includes(style)) {
     delete root.dataset.style;
+  } else {
+    root.dataset.style = style;
+  }
+  if (style === 'notebook') root.dataset.pen = pen === 'graphite' ? 'graphite' : 'blue';
+  // Csak sötét stílusban sötét; máskor a választott (vagy a rendszer) téma.
+  if (DARK_ONLY.includes(style)) {
+    root.dataset.theme = 'dark';
+  } else {
+    const t = storedPref('theme');
+    root.dataset.theme = t === 'light' || t === 'dark'
+      ? t
+      : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   }
 }
 
 /// A mentés beállításai szerint (ha a böngészőben nem választottak mást).
 function followApp(model) {
-  const appNotebook = model.settings.style === 'notebook';
+  const appStyle = STYLES.includes(model.settings.style) ? model.settings.style : 'plain';
   const pen = model.settings.notebook_pen === 'graphite' ? 'graphite' : 'blue';
-  storePref('appStyle', appNotebook ? 'notebook' : 'plain');
+  storePref('appStyle', appStyle);
   storePref('pen', pen);
-  // ?style=notebook|plain és ?pen=blue|graphite: kényszerítve (nem tároljuk),
-  // pl. képernyőképekhez.
-  const forced = ['notebook', 'plain'].includes(params.get('style')) ? params.get('style') : null;
-  const chosen = forced ?? storedPref('style');
+  // ?style=plain|notebook|viking|oled és ?pen=blue|graphite: kényszerítve
+  // (nem tároljuk), pl. képernyőképekhez.
+  const forced = STYLES.includes(params.get('style')) ? params.get('style') : null;
+  const stored = storedPref('style');
+  const chosen = forced ?? (STYLES.includes(stored) ? stored : null);
   const forcedPen = ['blue', 'graphite'].includes(params.get('pen')) ? params.get('pen') : null;
-  setNotebook(chosen ? chosen === 'notebook' : appNotebook, forcedPen ?? pen);
+  setStyle(chosen ?? appStyle, forcedPen ?? pen);
   applyStatic();
 }
 
@@ -136,9 +153,9 @@ function playIntro() {
 }
 
 $('#styleToggle').addEventListener('click', () => {
-  const on = !isNotebook();
-  storePref('style', on ? 'notebook' : 'plain');
-  setNotebook(on, storedPref('pen'));
+  const next = STYLES[(STYLES.indexOf(currentStyle()) + 1) % STYLES.length];
+  storePref('style', next);
+  setStyle(next, storedPref('pen'));
   applyStatic();
   render();
   playIntro();

@@ -1,0 +1,56 @@
+/* Viking (Kovácsműhely) és OLED stílus a webes nézetben, mint az appban
+   (2026-10-13). Mindkettő csak sötét: <html data-style="viking|oled">, a
+   világos/sötét gomb ilyenkor nem látszik. */
+
+/* ---------------------------------------------------------------- Viking */
+[data-style="viking"] {
+  --bg: #141518; --bg2: #24262b; --card: #1c1d21; --line: #3c3f46;
+  --text: #ede6da; --muted: #9c978f; --header: rgba(20, 21, 24, .9);
+  --red: #e5484d; --red2: #f05c61; --green: #e5484d; --warn: #f5b800;
+  --cta-bg: #e5484d; --cta-fg: #fff5f2; --cta-hover: #f05c61;
+  --track: #2e3036; --grid: rgba(237, 230, 218, .06);
+  --head: Cinzel, Georgia, serif; --head-weight: 700; --head-case: none;
+  color-scheme: dark;
+}
+/* A műhely lámpája: felül halvány fény a grafiton. */
+[data-style="viking"] body {
+  background: radial-gradient(ellipse at 50% -10%, #2a2b30 0%, #141518 55%, #0d0d0f 100%) fixed;
+}
+/* Vas kártya fényesebb felső éllel, a sarkokban szegecs. */
+[data-style="viking"] .card {
+  border-radius: 10px;
+  border-top-color: #5a5e67;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 3px 8px rgba(0, 0, 0, .45);
+  --rivet: radial-gradient(circle at 40% 35%, #c9ccd3 0, #6b6f78 1.9px, #2b2d33 3.2px, transparent 3.6px);
+  background:
+    var(--rivet) 4px 4px / 8px 8px no-repeat,
+    var(--rivet) calc(100% - 4px) 4px / 8px 8px no-repeat,
+    var(--rivet) 4px calc(100% - 4px) / 8px 8px no-repeat,
+    var(--rivet) calc(100% - 4px) calc(100% - 4px) / 8px 8px no-repeat,
+    linear-gradient(180deg, #212227, #18191c);
+}
+[data-style="viking"] .btn { border-radius: 10px; border-color: #5a5e67; }
+[data-style="viking"] .btn.primary {
+  font-family: Cinzel, serif; letter-spacing: .04em;
+  box-shadow: 0 0 14px rgba(229, 72, 77, .35);
+}
+[data-style="viking"] .logo { font-family: Cinzel, serif; }
+
+/* ------------------------------------------------------------------ OLED */
+/* Tiszta fekete (az OLED-kijelző ott nem világít), kitöltés nélküli
+   kártyák vékony kerettel, tompított fehér szöveg, egyetlen halk vörös;
+   árnyék és elmosás nincs. */
+[data-style="oled"] {
+  --bg: #000; --bg2: #0b0b0b; --card: #000; --line: #1f1f1f;
+  --text: #d6d6d6; --muted: #7c7c7c; --header: #000;
+  --red: #b23a40; --red2: #c4474d; --green: #b23a40; --warn: #b98a00;
+  --cta-bg: #b23a40; --cta-fg: #f0f0f0; --cta-hover: #c4474d;
+  --track: #141414; --grid: rgba(255, 255, 255, .05);
+  color-scheme: dark;
+}
+[data-style="oled"] .top { backdrop-filter: none; -webkit-backdrop-filter: none; }
+[data-style="oled"] .card { box-shadow: none; }
+
+/* --------------------------------------------------- mindkettő: csak sötét */
+[data-style="viking"] [data-theme-toggle],
+[data-style="oled"] [data-theme-toggle] { display: none; }

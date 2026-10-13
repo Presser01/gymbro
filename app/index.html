@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../assets/icons.css">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="notebook.css">
+<link rel="stylesheet" href="themes.css">
 <script>
   // A téma már az első kirajzolás előtt (ne villanjon), mint a főoldalon.
   (function () {
@@ -21,17 +22,22 @@
       t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
     document.documentElement.dataset.theme = t;
-    // Füzet stílus: a böngészőben választott, különben az app legutóbbi
-    // stílusa (a mentésből megjegyezve), hogy belépés előtt se villanjon.
+    // Stílus: a böngészőben választott, különben az app legutóbbi stílusa
+    // (a mentésből megjegyezve), hogy belépés előtt se villanjon. A Viking
+    // és az OLED csak sötét.
     var q = new URLSearchParams(location.search);
     var s = q.get('style'), pen = q.get('pen');
+    var styles = ['plain', 'notebook', 'viking', 'oled'];
     try {
-      if (s !== 'notebook' && s !== 'plain') s = localStorage.getItem('style') || localStorage.getItem('appStyle');
+      if (styles.indexOf(s) < 0) s = localStorage.getItem('style') || localStorage.getItem('appStyle');
       if (pen !== 'graphite' && pen !== 'blue') pen = localStorage.getItem('pen');
     } catch (e) {}
     if (s === 'notebook') {
       document.documentElement.dataset.style = 'notebook';
       document.documentElement.dataset.pen = pen === 'graphite' ? 'graphite' : 'blue';
+    } else if (s === 'viking' || s === 'oled') {
+      document.documentElement.dataset.style = s;
+      document.documentElement.dataset.theme = 'dark';
     }
   })();
 </script>
@@ -56,7 +62,7 @@
   <span class="backup-at" id="backupAt" hidden></span>
   <div class="tools">
     <button class="lang-btn" type="button" data-lang-toggle><span data-t="otherLang">English</span></button>
-    <button class="icon-btn" type="button" id="styleToggle" aria-pressed="false">
+    <button class="icon-btn" type="button" id="styleToggle">
       <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
     </button>
     <button class="icon-btn" type="button" data-theme-toggle>
