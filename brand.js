@@ -3,7 +3,7 @@
 // kContactEmail konstansa; a kettőt együtt kell módosítani.)
 const BRAND = {
   name: 'Raidmate',
-  contactEmail: ['7991samatigetzsereP', 'moc.liamg'].map((s) => [...s].reverse().join('')).join('@'),
+  contactEmail: ['etamdi4r', 'moc.liamg'].map((s) => [...s].reverse().join('')).join('@'),
 };
 
 document.querySelectorAll('[data-brand]').forEach((el) => {
