@@ -363,6 +363,8 @@ const kgText = (kg) => {
 
 function setText(s) {
   if (s.kg != null && s.reps != null) return `${kgText(s.kg)} × ${s.reps}`;
+  // Súly × idő (az appban ismétlésről időre váltott súlyos gyakorlat).
+  if (s.kg != null && s.sec != null) return `${kgText(s.kg)} × ${s.sec} s`;
   if (s.reps != null) return `${s.reps}`;
   if (s.sec != null) return `${s.sec} s`;
   return '–';
