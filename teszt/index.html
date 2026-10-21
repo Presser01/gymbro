@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="hu" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesztelőknek – {brand}</title>
+<meta name="description" content="Legyél a Raidmate tesztelője: így csatlakozhatsz a zárt teszthez, ezt érdemes kipróbálni, így küldhetsz visszajelzést.">
+<link rel="icon" href="../assets/logo.png">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/icons.css">
+<script>
+  // A téma már az első kirajzolás előtt (ne villanjon).
+  (function () {
+    var t = new URLSearchParams(location.search).get('theme');
+    if (t !== 'light' && t !== 'dark') {
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+    }
+    if (t !== 'light' && t !== 'dark') {
+      t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+<style>
+  /* A bemutató oldal színei és betűi (index.html, bolt). */
+  :root, [data-theme="dark"] {
+    --bg: #0d0e10; --bg2: #121317; --card: #1a1b20; --line: #2a2b31;
+    --text: #f3f3f5; --muted: #9b9ca3; --soft: #c9cad0; --header: rgba(13,14,16,.82);
+    --red: #e5484d; --red2: #ff6b5b; --green: #2ec56b;
+    --cta-bg: var(--red); --cta-fg: #fff; --cta-hover: var(--red2);
+    --chip: rgba(255,255,255,.06); --glow: rgba(229,72,77,.14);
+    --head: "Barlow Condensed", Barlow, sans-serif; --head-weight: 700;
+    --head-case: uppercase; --head-spacing: -.01em;
+    color-scheme: dark;
+  }
+  [data-theme="light"] {
+    --bg: #fbfbfc; --bg2: #f2f2f4; --card: #ffffff; --line: #e6e6ea;
+    --text: #111214; --muted: #66676e; --soft: #3d3e44; --header: rgba(251,251,252,.86);
+    --cta-bg: #111214; --cta-fg: #fff; --cta-hover: #2b2c31;
+    --chip: rgba(0,0,0,.05); --glow: rgba(229,72,77,.08);
+    --head: Barlow, system-ui, sans-serif; --head-weight: 600;
+    --head-case: none; --head-spacing: -.02em;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 17px/1.6 Barlow, system-ui, sans-serif; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3 { font-family: var(--head); font-weight: var(--head-weight); letter-spacing: var(--head-spacing);
+               line-height: 1.05; margin: 0; }
+  h1, h2 { text-transform: var(--head-case); }
+  .eyebrow { color: var(--red); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 13px; }
+  .mi { width: 22px; height: 22px; }
+
+  header { position: sticky; top: 0; z-index: 10; background: var(--header);
+           backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 18px; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none;
+          font-family: "Barlow Condensed"; font-weight: 700; font-size: 24px; letter-spacing: .02em; }
+  .logo img { width: 34px; height: 34px; border-radius: 9px; }
+  nav { margin-left: auto; display: flex; gap: 20px; align-items: center; font-weight: 600; font-size: 15px; }
+  nav a { text-decoration: none; color: var(--muted); }
+  nav a:hover { color: var(--text); }
+  .icon-btn { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+              border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; padding: 0; }
+  .icon-btn:hover { background: var(--bg2); }
+  .lang-btn { font: 600 14px Barlow, sans-serif; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 6px; }
+  .lang-btn:hover { color: var(--text); }
+  [data-theme="dark"] .only-light, [data-theme="light"] .only-dark { display: none; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px;
+         font: 700 16px Barlow, sans-serif; text-decoration: none; border: 1.5px solid var(--line);
+         background: transparent; color: var(--text); cursor: pointer; }
+  [data-theme="light"] .btn { border-radius: 12px; }
+  .btn.primary { background: var(--cta-bg); border-color: var(--cta-bg); color: var(--cta-fg); }
+  .btn.primary:hover { background: var(--cta-hover); }
+
+  .intro { padding: 56px 0 28px; position: relative; }
+  .intro::before { content: ""; position: absolute; inset: 0 -20px; z-index: -1;
+                   background: radial-gradient(ellipse 60% 70% at 15% 20%, var(--glow), transparent 70%); }
+  .intro h1 { font-size: clamp(44px, 7vw, 84px); margin-top: 6px; }
+  .intro p { color: var(--soft); max-width: 60ch; margin: 16px 0 0; font-size: 19px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+  .chips span { font-size: 14px; font-weight: 600; color: var(--soft); background: var(--chip);
+                border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+
+  section.block { padding: 44px 0 8px; scroll-margin-top: 72px; }
+  section.block > h2 { font-size: clamp(32px, 4.4vw, 48px); }
+  section.block > .lead { color: var(--soft); max-width: 64ch; margin: 10px 0 0; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px; counter-reset: step; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px 20px; }
+  .step::before { counter-increment: step; content: counter(step);
+                  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+                  background: var(--red); color: #fff; font: 700 22px "Barlow Condensed", sans-serif; margin-bottom: 14px; }
+  .step h3 { font-size: 24px; }
+  .step p { margin: 8px 0 0; color: var(--soft); font-size: 15px; }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px; }
+  .ico { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px;
+         background: var(--chip); color: var(--red); margin-bottom: 12px; }
+  .ico .mi { width: 26px; height: 26px; }
+  .card h3 { font-size: 22px; }
+  .card p { margin: 6px 0 0; color: var(--soft); font-size: 15px; }
+  .card.key { border-color: var(--red); }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+  .tip { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+  .path { font-weight: 700; color: var(--text); }
+
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 0 20px; margin-top: 10px; }
+  details:first-of-type { margin-top: 22px; }
+  summary { cursor: pointer; list-style: none; padding: 16px 0; font-weight: 700; font-size: 18px;
+            display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font: 700 26px "Barlow Condensed", sans-serif; color: var(--red); line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { margin: 0 0 18px; color: var(--soft); }
+
+  .final { margin: 48px 0 0; background: var(--card); border: 1px solid var(--line); border-radius: 26px;
+           padding: 34px 30px; display: grid; grid-template-columns: 1fr auto; gap: 18px 30px; align-items: center;
+           background-image: radial-gradient(ellipse 50% 90% at 100% 50%, var(--glow), transparent 70%); }
+  .final h2 { font-size: clamp(32px, 4vw, 46px); }
+  .final p { margin: 8px 0 0; color: var(--soft); }
+  .consent { grid-column: 1 / -1; color: var(--muted); font-size: 14px; margin: 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: 14px; margin-top: 48px; }
+  footer .wrap { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer nav { margin-left: auto; font-weight: 500; }
+
+  @media (max-width: 960px) {
+    .steps, .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 860px) {
+    nav .hide-sm { display: none; }
+    footer nav { margin-left: 0; }
+    .two, .final { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .wrap { padding: 0 16px; }
+    .steps, .grid { grid-template-columns: 1fr; }
+    .intro { padding-top: 40px; }
+    .final { padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="../"><img src="../assets/logo.png" alt=""><span data-brand>Raidmate</span></a>
+    <nav>
+      <a class="hide-sm" href="../" data-i18n="navHome">Főoldal</a>
+      <a class="hide-sm" href="../edzok/" data-i18n="navCoaches">Edzők</a>
+      <a class="hide-sm" href="../bolt/" data-i18n="navShop">Bolt</a>
+      <button class="lang-btn" type="button" data-lang-toggle data-i18n="otherLang">English</button>
+      <button class="icon-btn" type="button" data-theme-toggle title="Világos téma" aria-label="Világos téma">
+        <span class="mi only-dark i-light-mode"></span>
+        <span class="mi only-light i-dark-mode"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <div class="eyebrow" data-i18n="testEyebrow">Zárt teszt</div>
+    <h1 data-i18n="testTitle">Legyél tesztelő!</h1>
+    <p data-i18n="testLead">Segíts, hogy a Raidmate a megjelenés előtt jobb legyen. Két hétig használod, amikor edzel, és megírod, mi tetszett, mi nem, és mi nem működött.</p>
+    <div class="cta">
+      <a class="btn primary" href="#" data-test-mail><span class="mi i-mail-outline"></span><span data-i18n="testJoin">Jelentkezés e-mailben</span></a>
+      <a class="btn" href="#lepesek" data-i18n="testHowLink">Hogyan működik?</a>
+    </div>
+    <div class="chips">
+      <span data-i18n="testChip1">Kb. 2 hét</span>
+      <span data-i18n="testChip2">Android 7 vagy újabb</span>
+      <span data-i18n="testChip3">Ingyenes, reklám nélkül</span>
+      <span data-i18n="testChip4">Fiók sem kell</span>
+    </div>
+  </div>
+
+  <section class="block" id="lepesek">
+    <h2 data-i18n="testStepsTitle">Így csatlakozhatsz</h2>
+    <div class="steps">
+      <div class="step"><h3 data-i18n="testStep1Title">Jelentkezz</h3><p data-i18n="testStep1Text">A gomb megnyit egy kitöltött levelet. Írd bele annak a Google-fióknak a címét, amivel a Play Áruházat használod, és a telefonod típusát.</p></div>
+      <div class="step"><h3 data-i18n="testStep2Title">Megkapod a linket</h3><p data-i18n="testStep2Text">Felveszünk a tesztelők listájára, és válaszban elküldjük a csatlakozás linkjét. Ha a teszt még nem indult el, az induláskor írunk.</p></div>
+      <div class="step"><h3 data-i18n="testStep3Title">Telepítsd</h3><p data-i18n="testStep3Text">A linken fogadd el a meghívást, és telepítsd a Raidmate-et a Play Áruházból. A frissítések onnan maguktól jönnek.</p></div>
+      <div class="step"><h3 data-i18n="testStep4Title">Maradj 14 napig</h3><p data-i18n="testStep4Text">A Google a megjelenés előtt 14 napos zárt tesztet kér. Legalább ennyi ideig maradj a programban, és használd az appot, amikor edzel.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 data-i18n="testTryTitle">Mit próbálj ki?</h2>
+    <p class="lead" data-i18n="testTryLead">Nem kell mindent végignézni: azt használd, amit egyébként is csinálnál. Ezekre különösen kíváncsiak vagyunk.</p>
+    <div class="grid">
+      <div class="card"><div class="ico"><span class="mi i-fitness-center"></span></div><h3 data-i18n="testTry1Title">Egy teljes edzés</h3><p data-i18n="testTry1Text">Terv választása, súly és ismétlés beírása, pihenő, és hogy jó-e a következő alkalom javaslata.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-timer"></span></div><h3 data-i18n="testTry2Title">Időzítők lezárt képernyővel</h3><p data-i18n="testTry2Text">Időben szól-e a pihenő vége, a plank időzítője és a futás szakaszváltása, ha a telefon a zsebedben van?</p></div>
+      <div class="card"><div class="ico"><span class="mi i-directions-run"></span></div><h3 data-i18n="testTry3Title">Kardió és futás</h3><p data-i18n="testTry3Text">Kezdő futóprogram, stopper, HIIT, és hogy pontos-e a mért idő.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-restaurant-menu"></span></div><h3 data-i18n="testTry4Title">Étrend</h3><p data-i18n="testTry4Text">Étkezés felvétele, vonalkód beolvasása, napi kalória- és makrócél.</p></div>
+      <div class="card key"><div class="ico"><span class="mi i-backup"></span></div><h3 data-i18n="testTry5Title">Mentés és visszatöltés</h3><p data-i18n="testTry5Text">Ments fájlba, és töltsd vissza, akár egy másik telefonon. Ez a legfontosabb: senkinek ne vesszen el a naplója.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-palette"></span></div><h3 data-i18n="testTry6Title">Stílusok</h3><p data-i18n="testTry6Text">Füzet, Viking, OLED, világos és sötét: melyik tetszik, és hol nehéz olvasni?</p></div>
+      <div class="card"><div class="ico"><span class="mi i-groups"></span></div><h3 data-i18n="testTry7Title">Online fiók, ha szeretnéd</h3><p data-i18n="testTry7Text">Barátok, közös kihívás, titkosított mentés és webes nézet. Regisztrálni most meghívással lehet: kérd a jelentkezésben.</p></div>
+      <div class="card"><div class="ico"><span class="mi i-bug-report"></span></div><h3 data-i18n="testTry8Title">Ami furcsa</h3><p data-i18n="testTry8Text">Lassú, érthetetlen, elírás, rossz fordítás, vagy valami hiányzik: minden számít.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 data-i18n="testFbTitle">Hogyan küldj visszajelzést?</h2>
+    <div class="two">
+      <div class="card"><div class="ico"><span class="mi i-feedback"></span></div><h3 data-i18n="testFb1Title">Az appból</h3><p><span class="path" data-i18n="testFb1Path">Beállítások → Súgó és információ → Visszajelzés küldése.</span> <span data-i18n="testFb1Text">Kitöltött levelet nyit, benne az app verziójával és a telefon típusával; elküldés előtt átírhatod.</span></p></div>
+      <div class="card"><div class="ico"><span class="mi i-mail-outline"></span></div><h3 data-i18n="testFb2Title">E-mailben</h3><p><span data-i18n="testFb2Text">Írj bármikor, akár egy mondatot is:</span> <a href="#" data-contact data-contact-text>e-mail</a></p></div>
+    </div>
+    <p class="tip" data-i18n="testFbTip">Tipp: a képernyőkép sokat segít. Írd meg, mit csináltál, mit vártál, és mi történt helyette.</p>
+  </section>
+
+  <section class="block">
+    <h2 data-i18n="testFaqTitle">Gyakori kérdések</h2>
+    <details><summary data-i18n="testQ1">Kell fizetni valamiért?</summary><p data-i18n="testA1">Nem. A Raidmate ingyenes, nincs benne reklám és alkalmazáson belüli vásárlás.</p></details>
+    <details><summary data-i18n="testQ2">Kell fiók?</summary><p data-i18n="testA2">Nem. Fiók nélkül az app semmit nem küld sehova, minden a telefonodon marad. Az online fiók (barátok, titkosított mentés, webes nézet) nem kötelező.</p></details>
+    <details><summary data-i18n="testQ3">Miért kér értesítési engedélyt?</summary><p data-i18n="testA3">A pihenő végét, a futás szakaszváltásait és az emlékeztetőket értesítéssel jelzi, hogy lezárt képernyőnél is halld. Engedély nélkül is használható, de az időzítők nem szólnak.</p></details>
+    <details><summary data-i18n="testQ4">Megmaradnak az adataim a teszt után?</summary><p data-i18n="testA4">Igen. A tesztverzió a Play Áruházban a végleges kiadásra frissül, és az adataid a telefonon maradnak. Azért időnként ments fájlba (Profil → Mentés és export).</p></details>
+    <details><summary data-i18n="testQ5">Hogyan lépek ki?</summary><p data-i18n="testA5">A csatlakozási linken bármikor kiléphetsz a programból, vagy írj nekünk, és levesszük a címedet a listáról. Az app a telefonon marad, azt te törölheted.</p></details>
+    <details><summary data-i18n="testQ6">Mi lesz az e-mail-címemmel?</summary><p><span data-i18n="testA6">Csak a tesztelői listához és a teszttel kapcsolatos levelekhez használjuk, és a teszt végén töröljük.</span> <a href="../privacy/index.html#hu" data-href-lang="../privacy/index.html#{lang}" data-i18n="testA6Link">Részletek az adatvédelmi tájékoztatóban (Tesztelés)</a></p></details>
+    <details><summary data-i18n="testQ7">Van iPhone-os változat?</summary><p data-i18n="testA7">Még nincs, most csak Androidra készül. Online fiókkal viszont a naplódat a böngészőben is megnézheted.</p></details>
+  </section>
+
+  <section class="final">
+    <div>
+      <h2 data-i18n="testCtaTitle">Benne vagy?</h2>
+      <p data-i18n="testCtaText">Egy rövid levél, és már a listán is vagy.</p>
+    </div>
+    <a class="btn primary" href="#" data-test-mail><span class="mi i-mail-outline"></span><span data-i18n="testJoin">Jelentkezés e-mailben</span></a>
+    <p class="consent" data-i18n="testConsent">A jelentkezéssel hozzájárulsz, hogy az e-mail-címedet a tesztelői listához és a teszttel kapcsolatos levelekhez használjuk. Jelentkezni 16 év felett lehet.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 <span data-brand>Raidmate</span></span>
+    <nav>
+      <a href="../privacy/index.html#hu" data-href-lang="../privacy/index.html#{lang}" data-i18n="footPrivacy">Adatvédelem</a>
+      <a href="../edzok/" data-i18n="navCoaches">Edzők</a>
+      <a href="../bolt/" data-i18n="navShop">Bolt</a>
+      <a href="#" data-contact data-i18n="footContact">Kapcsolat</a>
+    </nav>
+  </div>
+</footer>
+<script src="../brand.js"></script>
+<script src="../i18n.js"></script>
+<script src="teszt.js"></script>
+</body>
+</html>

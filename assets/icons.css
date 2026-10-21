@@ -3,12 +3,15 @@
    Az útvonalak ehhez a fájlhoz képest értendők, így bármelyik oldalról jók. */
 .mi { display: inline-block; width: 24px; height: 24px; background: currentColor;
       -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.i-backup { --i: url(icons/backup.png); }
+.i-bug-report { --i: url(icons/bug_report.png); }
 .i-check-circle { --i: url(icons/check_circle.png); }
 .i-cloud-done { --i: url(icons/cloud_done.png); }
 .i-dark-mode { --i: url(icons/dark_mode.png); }
 .i-directions-run { --i: url(icons/directions_run.png); }
 .i-download { --i: url(icons/download.png); }
 .i-emoji-events { --i: url(icons/emoji_events.png); }
+.i-feedback { --i: url(icons/feedback.png); }
 .i-fitness-center { --i: url(icons/fitness_center.png); }
 .i-groups { --i: url(icons/groups.png); }
 .i-insights { --i: url(icons/insights.png); }
@@ -16,6 +19,8 @@
 .i-local-fire-department { --i: url(icons/local_fire_department.png); }
 .i-lock { --i: url(icons/lock.png); }
 .i-mail-outline { --i: url(icons/mail_outline.png); }
+.i-palette { --i: url(icons/palette.png); }
+.i-phone-android { --i: url(icons/phone_android.png); }
 .i-qr-code-2 { --i: url(icons/qr_code_2.png); }
 .i-restaurant-menu { --i: url(icons/restaurant_menu.png); }
 .i-timer { --i: url(icons/timer.png); }
