@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raidmate – Termékadatok / Product data</title>
+<!--
+  Az ODbL (Open Database License) miatt: az appba csomagolt Open Food
+  Facts-kivonat (származtatott adatbázis) itt ugyanígy, ODbL alatt
+  letölthető. A fájl: tools/build_product_db.py.
+-->
+<style>
+  :root { --bg:#0e0f11; --card:#1a1b1f; --text:#f2f2f2; --muted:#9a9aa0; --accent:#e5484d; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f2f2f4; --card:#ffffff; --text:#111214; --muted:#6b6b72; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:720px; margin:0 auto; padding:32px 16px 48px; }
+  header { display:flex; align-items:center; gap:12px; }
+  header img { width:48px; height:48px; border-radius:12px; }
+  h1 { margin:0; font-size:26px; }
+  section { background:var(--card); border-radius:16px; padding:20px; margin-top:24px; }
+  h2 { margin:0 0 8px; font-size:21px; }
+  p, li { margin:8px 0; }
+  a { color:var(--accent); }
+  .dl { display:inline-block; margin-top:8px; padding:10px 18px; border-radius:999px; background:var(--accent);
+        color:#fff; font-weight:700; text-decoration:none; }
+  .muted { color:var(--muted); font-size:15px; }
+  code { font-size:15px; }
+</style>
+</head>
+<body>
+<main>
+<header><img src="../privacy/icon.png" alt=""><h1>Raidmate</h1></header>
+
+<section>
+  <h2>Termékadatok (Open Food Facts kivonat)</h2>
+  <p>A Raidmate-be csomagolt márkás termékek (név, márka, kiszerelés, tápérték) az <a href="https://world.openfoodfacts.org">Open Food Facts</a> nyílt adatbázisából származnak: a Magyarországon és a szomszédos országokban legtöbbet beolvasott termékek, szűrve (a nyilvánvalóan hibás tápértékek nélkül) és kerekítve.</p>
+  <p>Az adatbázis az <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) v1.0</a>, az egyes tartalmak a <a href="https://opendatacommons.org/licenses/dbcl/1-0/">Database Contents License (DbCL) v1.0</a> alatt érhetők el. Ez a kivonat is ODbL alatt szabadon letölthető és felhasználható.</p>
+  <a class="dl" href="openfoodfacts-raidmate.tsv.gz" download>Letöltés (TSV, gzip)</a>
+  <p class="muted">Formátum: tabulátorral tagolt szöveg, UTF-8; a „#” sorok megjegyzések (forrás, licenc, dátum, oszlopok). Oszlopok: vonalkód, név, márka, kiszerelés, l = folyadék (100 ml-re), kategória, kcal, fehérje, zsír, szénhidrát, rost (100 g-ra vagy 100 ml-re), adag (g).</p>
+</section>
+
+<section lang="en">
+  <h2>Product data (Open Food Facts extract)</h2>
+  <p>The branded products bundled with Raidmate (name, brand, package size, nutrition values) come from the open <a href="https://world.openfoodfacts.org">Open Food Facts</a> database: the most scanned products in Hungary and neighbouring countries, filtered (without obviously wrong nutrition values) and rounded.</p>
+  <p>The database is available under the <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) v1.0</a>, the individual contents under the <a href="https://opendatacommons.org/licenses/dbcl/1-0/">Database Contents License (DbCL) v1.0</a>. This extract is also free to download and use under the ODbL.</p>
+  <a class="dl" href="openfoodfacts-raidmate.tsv.gz" download>Download (TSV, gzip)</a>
+  <p class="muted">Format: tab-separated text, UTF-8; lines starting with “#” are comments (source, licence, date, columns). Columns: barcode, name, brand, package size, l = liquid (per 100 ml), category, kcal, protein, fat, carbohydrate, fibre (per 100 g or 100 ml), serving (g).</p>
+</section>
+</main>
+</body>
+</html>
