@@ -6,6 +6,10 @@
 import { Api, ApiError } from './api.js';
 import { barChart, lineChart } from './charts.js';
 import { KDF_V1, deriveAccountKeys, openBackup, unwrapDataKey } from './crypto.js';
+
+/// A jelszószabály verziója (lib/domain/password_policy.dart,
+/// kPasswordPolicyVersion).
+const PASSWORD_POLICY = 2;
 import {
   MEDAL_KINDS,
   buildModel,
@@ -208,6 +212,7 @@ function errorText(e) {
     if (e.code === 'email_not_confirmed') return t('errNotConfirmed');
     if (e.code === 'network') return t('errNetwork');
     if (e.code === 'no_backup') return t('errNoBackup');
+    if (e.code === 'password_check') return t('errPasswordCheck');
     if (e.code === 'http_401' || e.code === 'bad_jwt') return t('errExpired');
   }
   if (e?.message === 'invalid backup' || /invalid tag|tag/i.test(e?.message ?? '')) return t('errOpen');
@@ -239,6 +244,12 @@ $('#loginForm').addEventListener('submit', async (ev) => {
       dataKey = unwrapDataKey(bundle, keys.encKey);
     } catch {
       throw new Error('invalid backup');
+    }
+    // Az új jelszószabály (2. verzió, 2026-10-21): amíg a jelszót az appban
+    // nem ellenőrizték (és ha kellett, cserélték), itt sem nyílik a mentés.
+    if ((bundle.pol ?? 1) < PASSWORD_POLICY) {
+      dataKey.fill(0);
+      throw new ApiError('password_check');
     }
     setStep(t('stepDownload'));
     const list = await api.backups();
