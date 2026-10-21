@@ -40,7 +40,7 @@ const T = {
     stars: (v) => `${v} ★`,
     ratingLine: (avg, n) => `${avg} ★ (${n} értékelés)`,
     ratingFew: 'Még kevés értékelés',
-    rateInApp: 'Értékelni az appban lehet, online fiókkal. Másoknak csak az összesítés látszik, 3 értékelés után.',
+    rateInApp: 'Értékelni az appban lehet, legalább 7 napos online fiókkal. Másoknak csak az összesítés látszik, 3 értékelés után. Nem ellenőrizzük, hogy az értékelő tényleg edzett-e az edzővel; a nem valósnak tűnő értékeléseket töröljük.',
     tags: {
       explains: 'Jól magyaráz', motivating: 'Motiváló', precise: 'Pontos', flexible: 'Rugalmas',
       technique: 'Jó technika', patient: 'Türelmes', effective: 'Eredményes', value: 'Jó ár-érték',
@@ -109,7 +109,7 @@ const T = {
     stars: (v) => `${v} ★`,
     ratingLine: (avg, n) => `${avg} ★ (${n === 1 ? '1 rating' : `${n} ratings`})`,
     ratingFew: 'Not enough ratings yet',
-    rateInApp: 'You can rate in the app with an online account. Others only see the totals, after 3 ratings.',
+    rateInApp: "You can rate in the app with an online account at least 7 days old. Others only see the totals, after 3 ratings. We don't check whether the person rating actually trained with the coach; ratings that don't look genuine are deleted.",
     tags: {
       explains: 'Explains well', motivating: 'Motivating', precise: 'Precise', flexible: 'Flexible',
       technique: 'Good technique', patient: 'Patient', effective: 'Gets results', value: 'Good value',

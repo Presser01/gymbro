@@ -28,7 +28,7 @@
 <body>
 <main>
 <header><img src="icon.png" alt=""><h1>Raidmate</h1></header>
-<nav><a href="#hu">Magyar</a><a href="#en" lang="en">English</a></nav>
+<nav><a href="#hu">Magyar</a><a href="#en" lang="en">English</a><a href="#de" lang="de">Deutsch</a></nav>
 <section id="hu">
 <h2 style="font-size:24px">Adatvédelmi tájékoztató</h2>
 <h2>Röviden</h2>
@@ -54,7 +54,7 @@
 </ul>
 <h2>Online fiók (nem kötelező)</h2>
 <ul>
-<li><strong>Mi kerül a szerverre:</strong> e-mail-cím, felhasználónév, megjelenő név (ha megadod), a 16+ nyilatkozat és a hozzájárulás ideje, egy titkosított kulcscsomag, valamint a naplód titkosított mentése (a legutóbbi kettő).</li>
+<li><strong>Mi kerül a szerverre:</strong> e-mail-cím, felhasználónév, megjelenő név (ha megadod), a 16+ nyilatkozat és a hozzájárulás ideje, a felhasználási feltételek elfogadott változata és az elfogadás ideje, egy titkosított kulcscsomag, valamint a naplód titkosított mentése (a legutóbbi kettő).</li>
 <li><strong>Meghívás (amíg a regisztráció meghívásos):</strong> a meghívott e-mail-címét és egy megjegyzést (pl. a nevét) tároljuk, hogy regisztrálni tudjon. A fiók törlésekor ez is törlődik; ha nem regisztrálsz, kérésre vagy a zárt teszt végén töröljük. Jogalap: a kérésedre a regisztráció előkészítése.</li>
 <li><strong>A jelszavad nem kerül a szerverre:</strong> a telefon egy belőle levezetett belépési kulcsot küld, a titkosítás kulcsa pedig csak nálad van.</li>
 <li><strong>A titkosított mentés:</strong> belépve az app naponta legfeljebb egyszer (ha változott valami), egy befejezett edzés vagy az étkezésnapló változása után kb. 10 perccel, illetve a „Mentés most” gombra feltölti a naplód titkosított másolatát. Végponttól végpontig titkosított: a kulcsa csak nálad van (a telefonon az Android Keystore védi), a szerver nem tudja elolvasni. A szerveren a legutóbbi két mentés marad meg.</li>
@@ -152,7 +152,7 @@
 </ul>
 <h2>Online account (optional)</h2>
 <ul>
-<li><strong>What goes to the server:</strong> email, username, display name (if you set one), when you confirmed being 16+ and gave consent, an encrypted key bundle, and the encrypted backup of your log (the last two).</li>
+<li><strong>What goes to the server:</strong> email, username, display name (if you set one), when you confirmed being 16+ and gave consent, which version of the terms of use you accepted and when, an encrypted key bundle, and the encrypted backup of your log (the last two).</li>
 <li><strong>Invitations (while sign-up is invite-only):</strong> we store the invited person's email address and a note (e.g. their name) so they can sign up. It is deleted when the account is deleted; if you don't sign up, we delete it on request or when the closed test ends. Legal basis: preparing your sign-up at your request.</li>
 <li><strong>Your password never goes to the server:</strong> the phone sends a login key derived from it, and the encryption key stays with you.</li>
 <li><strong>The encrypted backup:</strong> while you are logged in, the app uploads an encrypted copy of your log at most once a day (if something changed), about 10 minutes after a finished workout or a change in your meal log, or when you tap “Back up now”. It is end-to-end encrypted: only you hold its key (on the phone it is protected by the Android Keystore), and the server cannot read it. The server keeps the last two backups.</li>
@@ -224,6 +224,105 @@
 <h2>Contact</h2>
 <p>Controller: Tamás Peresztegi (private individual), the developer of Raidmate. Address: Árpád utca 136, 7000 Sárbogárd, Hungary. For questions or requests, write to <a href="#" data-contact data-contact-text>e-mail</a>. We reply within 30 days.</p>
 <p>Effective: October 21, 2026</p>
+</section>
+<section id="de" lang="de">
+<h2 style="font-size:24px">Datenschutzerklärung</h2>
+<h2>Kurz gesagt</h2>
+<p>Ohne Konto <strong>erhebt und sendet Raidmate keine Daten</strong>: Alles, was du eingibst, bleibt auf diesem Handy. Wenn du ein (optionales) Online-Konto erstellst, geht nur das auf den Server, was das Konto braucht (siehe unten). Eine Ausnahme: Wenn du einen unbekannten Barcode online nachschlägst, wird der Barcode an Open Food Facts gesendet (siehe Produktdaten).</p>
+<h2>Was die App speichert</h2>
+<ul>
+<li>Trainings, Sätze, Gewichte, Notizen und Trainingspläne</li>
+<li>Cardio-Einheiten (Aktivität, Dauer, Abschnitte, Strecke, geschätzte Kalorien, Gefühl, Notiz), deine eigenen Intervallläufe, deine eigenen Aktivitäten und HIIT-Workouts</li>
+<li>Ernährung: Wochenplan, Rezepte, Mahlzeiten- und Snack-Tagebuch, Einkaufsliste</li>
+<li>Körpergewicht, Körpermaße (Taille, Hüfte, Arme usw., Körperfett in %), Wasseraufnahme und dein lokales Profil (Name, Geburtsjahr, Größe, Gewicht, Trainingsziele)</li>
+<li>Deine eigenen Lebensmittel (Name, Nährwerte, Barcode), Erfolge, tägliche Challenges</li>
+<li>Einstellungen und Erinnerungen</li>
+<li>Fototagebuch: Fotos deiner Form (vorne, Seite, hinten) im privaten Ordner der App, ohne Standortdaten. Sie bleiben nur auf dem Handy: Sie erscheinen nicht in deiner Galerie, sind in keiner Sicherung enthalten und werden nirgendwohin gesendet; wenn du es einschaltest, öffnen sie sich nur mit der Displaysperre deines Handys (Fingerabdruck, PIN).</li>
+<li>Fehlerprotokoll: Wenn in der App ein Fehler auftritt, die letzten Fehler (Zeitpunkt, Version, Fehlertext und die Stelle im Code), höchstens 20, für 30 Tage. Es verlässt das Handy nur, wenn du die E-Mail „Feedback senden“ abschickst: Du siehst es am Ende der E-Mail und kannst es löschen.</li>
+</ul>
+<p>Diese Daten liegen im privaten Speicher der App; andere Apps haben keinen Zugriff darauf.</p>
+<h2>Was sie nicht tut</h2>
+<ul>
+<li>Ohne Konto gibt es keine Registrierung: Dein Profil existiert nur auf dem Handy.</li>
+<li>Das Internet nutzt nur das Online-Konto, nachdem du dich registriert und angemeldet hast, sowie die Online-Barcode-Suche, wenn du sie anforderst; ohne Konto sendet die App von sich aus nichts.</li>
+<li>Keine Werbung, keine Analyse, keine Absturzberichte und keine anderen Dienste Dritter.</li>
+<li>Sie gibt niemals Daten weiter und verkauft keine Daten.</li>
+</ul>
+<h2>Online-Konto (optional)</h2>
+<ul>
+<li><strong>Was auf den Server geht:</strong> E-Mail-Adresse, Benutzername, Anzeigename (falls du einen festlegst), wann du bestätigt hast, mindestens 16 zu sein, und eingewilligt hast, welche Version der Nutzungsbedingungen du wann akzeptiert hast, ein verschlüsseltes Schlüsselpaket und die verschlüsselte Sicherung deines Verlaufs (die letzten zwei).</li>
+<li><strong>Einladungen (solange die Registrierung nur mit Einladung möglich ist):</strong> Wir speichern die E-Mail-Adresse der eingeladenen Person und eine Notiz (z. B. ihren Namen), damit sie sich registrieren kann. Sie wird mit dem Konto gelöscht; wenn du dich nicht registrierst, löschen wir sie auf Anfrage oder am Ende des geschlossenen Tests. Rechtsgrundlage: Vorbereitung deiner Registrierung auf deine Anfrage.</li>
+<li><strong>Dein Passwort geht nie auf den Server:</strong> Das Handy sendet einen daraus abgeleiteten Anmeldeschlüssel, und der Verschlüsselungsschlüssel bleibt bei dir.</li>
+<li><strong>Die verschlüsselte Sicherung:</strong> Solange du angemeldet bist, lädt die App höchstens einmal am Tag (wenn sich etwas geändert hat) eine verschlüsselte Kopie deines Verlaufs hoch, etwa 10 Minuten nach einem beendeten Training oder einer Änderung in deinem Ernährungstagebuch, oder wenn du auf „Jetzt sichern“ tippst. Sie ist Ende-zu-Ende-verschlüsselt: Den Schlüssel hast nur du (auf dem Handy durch den Android Keystore geschützt), und der Server kann sie nicht lesen. Der Server behält die letzten zwei Sicherungen.</li>
+<li><strong>Freunde (wenn du sie nutzt):</strong> Man findet dich nur über deinen genauen Benutzernamen oder deinen QR-Code; eine öffentliche Suche gibt es nicht. Deine Freunde sehen deinen Benutzernamen, deinen Anzeigenamen und nur das, was du teilst: deine wöchentliche Zahl an Trainings und Cardio, deine Wochenserie und deine Medaillen (jedes davon lässt sich auf der Freunde-Seite ausschalten). Dein Verlauf, dein Körpergewicht und deine Ernährung werden nie mit ihnen geteilt. Der Server speichert die Freundschaften, Blockierungen und Anfeuerungen (👏 💪 🔥, kein Text); Anfeuerungen werden nach 90 Tagen gelöscht. Du kannst jeden blockieren.</li>
+<li><strong>Team-Challenges (wenn du mitmachst):</strong> Während der Challenge sehen die Teilnehmenden gegenseitig Benutzernamen, Anzeigenamen, wöchentliches Trainingsziel und wöchentliche Trainingszahl. Eine Challenge wird 90 Tage nach ihrem Ende vom Server gelöscht; deine erfolgreichen Challenges (für die Medaille) werden nur auf deinem Handy gespeichert.</li>
+<li><strong>Coach-Profil (wenn du dich als Coach bewirbst):</strong> Deine Profilangaben (Anzeigename, Vorstellung, Foto, Land, Region, Ort, Fitnessstudios, Schwerpunkte, Sprachen, Richtpreise, die von dir gewählten Kontaktdaten und deine Qualifikationen) werden auf dem Server gespeichert und sind nach der Annahme für alle in der Coach-Suche sichtbar, in der App und auf der Website. Nach deiner genauen Adresse fragen wir nicht. Das Foto wird verkleinert und ohne Standortdaten hochgeladen. Das Foto deines Zertifikats sieht nur die prüfende Person, und es wird gelöscht, sobald entschieden ist (oder automatisch nach 30 Tagen); aufbewahrt werden nur die Bezeichnung der Qualifikation und der Monat der Prüfung. Prüfentscheidungen und ihre Begründungen (ohne deinen Namen) werden zur Bearbeitung von Beschwerden 1 Jahr aufbewahrt. Pausieren oder löschen kannst du das Profil unter Profil → Online-Konto → Mein Coach-Profil, und das Löschen deines Kontos löscht es ebenfalls. Rechtsgrundlage: Veröffentlichung des Profils auf deine Anfrage (Erbringung des Dienstes); die Anzeige deines Fotos, deiner E-Mail-Adresse und deiner Telefonnummer beruht auf deiner Einwilligung, die du jederzeit widerrufen kannst, indem du das Feld leerst. Nur ab 18.</li>
+<li><strong>Coach-Suche und Meldungen (wenn du sie nutzt):</strong> Solange du angemeldet bist, lädt die App die öffentliche Liste der angenommenen Coaches herunter; Suchen und Filtern geschehen auf deinem Handy, deine Filter bleiben auf deinem Handy, und der Server weiß nicht, wonach du gesucht hast. Wenn du ein Coach-Profil meldest, wird die Meldung (welches Profil, der Grund und deine Beschreibung) mit deinem Konto verknüpft auf dem Server gespeichert. Die Seite der prüfenden Person zeigt nicht, wer gemeldet hat, und auch der Coach erfährt es nicht; die Entscheidung teilen wir dir in der App mit. Abgeschlossene Meldungen werden nach 1 Jahr gelöscht; löschst du dein Konto früher, bleibt die Meldung ohne deinen Namen für das Entscheidungsprotokoll erhalten. Rechtsgrundlage: Umgang mit rechtswidrigen Inhalten (Gesetz über digitale Dienste der EU, DSA) und Erbringung des Dienstes.</li>
+<li><strong>Coaches bewerten (wenn du bewertest):</strong> Deine Sterne und Schlagwörter werden mit deinem Konto verknüpft auf dem Server gespeichert. Andere, auch der Coach, sehen nur die Summen (Anzahl, Durchschnitt, wie oft jedes Schlagwort vergeben wurde), und erst ab 3 Bewertungen; wer was vergeben hat, sehen sie nicht. Um Missbrauch zu begegnen (z. B. viele neue Konten auf einmal), kann die prüfende Person sehen, wer bewertet hat, und eine Bewertung löschen. Du kannst deine Bewertung jederzeit ändern oder zurückziehen, und sie wird gelöscht, wenn du dein Konto löschst. Wirst du als Coach bewertet, erscheinen diese Summen in deinem Profil. Deine Lieblings- und ausgeblendeten Coaches bleiben nur auf deinem Handy und werden nicht an den Server gesendet. Rechtsgrundlage: Erbringung des Dienstes.</li>
+<li><strong>Coach-Videos:</strong> Die Liste der angenommenen Coach-Videos zu den Übungen (Link, Titel, Tipp, Name, Abzeichen und Bewertung des Coaches) ist öffentlich. Solange du angemeldet bist, lädt die App diese Liste vom Server; ohne Konto zeigt sie die mit der Version ausgelieferte Liste und sendet nichts. Welches Video zuerst kommt, wird auf deinem Handy ermittelt (aus der Bewertung des Coaches, dem Alter des Videos und einer täglichen Auslosung; das Video deines Lieblingscoaches kommt zuerst, ausgeblendete Coaches werden weggelassen), und nichts davon wird an den Server gesendet. Wenn du als Coach ein Video einreichst, werden Link, Titel, Tipp und Übung mit deinem Konto verknüpft auf dem Server gespeichert; die prüfende Person nimmt es an oder lehnt es mit Begründung ab und kann es später mit Begründung entfernen. Ein angenommenes Video erscheint für alle mit deinem Namen und Profil. Du kannst ein Video jederzeit löschen; ein abgelehntes bleibt mit der Begründung unter Meine Videos, bis du es löschst. Wenn du dein Coach-Profil oder dein Konto löschst, werden auch deine Videos gelöscht (Apps ohne Konto zeigen sie ab der nächsten Version nicht mehr). Rechtsgrundlage: Erbringung des Dienstes.</li>
+<li><strong>Coach-Stufe (wenn du Coach bist):</strong> Deine Stufe (Basic, Pro oder Premium), wann sie endet und warum du sie hast (z. B. „Gründungscoach“) werden mit deinem Profil auf dem Server gespeichert; die prüfende Person legt sie fest, und du siehst sie unter Mein Coach-Profil. Öffentlich ist nur das Label „Hervorgehoben“ (bei Premium), nicht das Enddatum oder der Grund. Sie wird gelöscht, wenn du dein Coach-Profil löschst. Rechtsgrundlage: Erbringung des Dienstes.</li>
+<li><strong>Eine Stufe anfragen (wenn du Coach bist):</strong> Wenn du in der App Pro oder Premium anfragst, werden die angefragte Stufe, deine Nachricht und die Entscheidung (mit Begründung) mit deinem Konto verknüpft auf dem Server gespeichert; nur du und die prüfende Person können sie sehen. Es gibt keine Bezahlung: Wird sie bewilligt, bekommst du die Stufe eine Zeit lang kostenlos. Eine offene Anfrage kannst du zurückziehen; Anfragen werden gelöscht, wenn du dein Coach-Profil löschst. Rechtsgrundlage: Erbringung des Dienstes.</li>
+<li><strong>Einreichen im angemeldeten Zustand:</strong> Der Inhalt, der Name des Autors, die Quelle und dein Benutzername gehen zur Prüfung auf den Server; die prüfende Person nimmt an oder lehnt mit Begründung ab, und den Stand siehst du unter Meine Einreichungen. Angenommene Inhalte erscheinen für alle mit dem Namen des Autors und bleiben erhalten, wenn du dein Konto löschst (auf Anfrage entfernen wir sie); offene und abgelehnte Einreichungen werden mit dem Konto gelöscht. Solange du angemeldet bist, lädt die App beim Öffnen neu angenommene Inhalte herunter.</li>
+<li><strong>Anbieter (Auftragsverarbeiter):</strong> Supabase Inc.; die Daten werden in der Europäischen Union gespeichert.</li>
+<li><strong>E-Mails (Bestätigung, Code zum Zurücksetzen des Passworts):</strong> werden von Raidmates eigener Gmail-Adresse (<a href="#" data-contact data-contact-text>e-mail</a>) über den E-Mail-Dienst von Google (Google Ireland Ltd.) gesendet. Dafür erhält Google deine E-Mail-Adresse und den Inhalt der Nachricht (den Bestätigungslink oder den Code) und kann sie nach seinen eigenen Datenschutzbestimmungen auch außerhalb der EU verarbeiten. Newsletter oder Werbe-E-Mails versenden wir nicht.</li>
+<li><strong>Rechtsgrundlage:</strong> Bereitstellung des Kontos und deine Einwilligung. Nur ab 16.</li>
+<li><strong>Speicherdauer und Löschung:</strong> solange das Konto besteht. Du kannst es jederzeit in der App löschen (Profil → Online-Konto → Konto löschen); alle deine Daten auf dem Server werden gelöscht (auch die Sicherungen), die Daten auf deinem Handy bleiben. Wenn du dich abmeldest, vergisst das Handy den Sicherungsschlüssel.</li>
+</ul>
+<h2>Berechtigungen</h2>
+<ul>
+<li><strong>Die Website:</strong> Die Vorstellungsseite, diese Erklärung und die Webansicht werden über GitHub Pages bereitgestellt (GitHub Inc., USA; zertifiziert nach dem EU-US-Datenschutzrahmen, Data Privacy Framework). Bei einem Besuch kann GitHub deine IP-Adresse in seinen üblichen technischen Protokollen verarbeiten. Die Website verwendet keine Cookies, kein Tracking und keine Analyse; dein Browser merkt sich nur die von dir gewählten Einstellungen (Sprache, Design, Stil) in seinem eigenen Speicher.</li>
+<li><strong>Coach-Suche auf der Website:</strong> funktioniert ohne Konto. Dein Browser lädt die öffentliche Liste der Coaches von unserem Server (Supabase, EU); Supabase kann dafür deine IP-Adresse in seinen üblichen technischen Protokollen verarbeiten. Suchen und Filtern geschehen in deinem Browser, und wir speichern deine Filter nicht. Auf der Website gehen Meldungen per E-Mail: Deine Mail-App öffnet eine vorausgefüllte Nachricht, die du selbst sendest.</li>
+<li><strong>Webansicht:</strong> Wenn du dich auf der Website anmeldest, öffnet sich deine verschlüsselte Sicherung in deinem Browser. Dein Passwort und der Schlüssel gehen nie auf den Server, und der Browser behält keines von beiden: Nach dem Schließen oder Neuladen des Tabs meldest du dich erneut an.</li>
+<li><strong>Internet:</strong> nur für das Online-Konto (Registrierung, Anmeldung, verschlüsselte Sicherung, Freunde, Einreichungen, Coach-Suche) und für die Online-Barcode-Suche, wenn du sie anforderst.</li>
+<li><strong>Benachrichtigungen:</strong> Ende der Pause, Wechsel der Laufintervalle und Erinnerungen.</li>
+<li><strong>Vibration und Wach-Sperre:</strong> für Hinweise und damit der Timer nicht einschläft.</li>
+<li><strong>Vordergrunddienst:</strong> damit der Timer bei gesperrtem Bildschirm genau bleibt (Androids Vordergrunddienst für Workouts). Android verlangt dafür auch die Angabe einer Sensorberechtigung; die App liest oder speichert keine Sensor- oder Aktivitätsdaten.</li>
+<li><strong>Kamera (nur wenn du einen Barcode oder einen Freundes-QR-Code scannst oder ein Foto für das Fototagebuch aufnimmst):</strong> beim Scannen nur für die Dauer des Scans; das Bild wird weder gespeichert noch irgendwohin gesendet. Die App verwendet nur den gescannten Code: Eine Barcode-Nummer wird mit deinen Lebensmitteln auf dem Handy gespeichert (und, wenn du eine Online-Suche anforderst, an Open Food Facts gesendet), ein QR-Code wird zu einer Freundschaftsanfrage. Ein Bild des Fototagebuchs bleibt nur auf dem Handy, im privaten Ordner der App.</li>
+<li><strong>Start beim Hochfahren:</strong> damit geplante Erinnerungen einen Neustart des Handys überstehen.</li>
+<li><strong>Exakte Wecker (wenn du sie einschaltest):</strong> damit Erinnerungen auf die Minute kommen.</li>
+</ul>
+<h2>Produktdaten und Barcodes</h2>
+<ul>
+<li><strong>Eingebaute Produktdaten:</strong> Namen, Marken und Nährwerte von Markenprodukten stammen aus der offenen Datenbank Open Food Facts (Open Database License) und sind in der App enthalten; Suchen und Scannen brauchen kein Internet, und es wird nichts gesendet.</li>
+<li><strong>Online-Suche (wenn du sie anforderst):</strong> Ist ein gescannter Barcode nicht in der Datenbank der App, sucht der Knopf „Online suchen“ – oder, wenn du es über das Zahnrad im Tab Ernährung einschaltest, die App von selbst – das Produkt in der öffentlichen Datenbank Open Food Facts (Verein Open Food Facts, Frankreich). Gesendet wird nur der Barcode, nicht dein Konto, dein Name oder dein Verlauf. Open Food Facts kann die Anfrage nach seinen eigenen Regeln in seinen üblichen technischen Protokollen (z. B. IP-Adresse) verarbeiten. Das gefundene Produkt bleibt auf dem Handy bei deinen eigenen Lebensmitteln. Rechtsgrundlage: deine Anfrage.</li>
+</ul>
+<h2>Zur Prüfung einreichen</h2>
+<p>Wenn du eigene Inhalte (Rezept, Übung, HIIT, Lauf, Lebensmittel, Aktivität oder Artikel; Videos können nur angenommene Coaches einreichen, siehe Online-Konto) als öffentlich markierst und ohne Konto einreichst, öffnet die App die E-Mail-App deines Handys mit einer vorausgefüllten Nachricht (angemeldet geht es online, siehe Online-Konto) (der Inhalt, der Name des Autors und die Quelle). Vorher vergleicht die App den Text mit den vorhandenen Inhalten auf dem Handy (Ähnlichkeitsprüfung); dafür verlässt nichts das Handy. Du sendest sie selbst ab oder verwirfst sie; die App selbst sendet nichts und speichert deine E-Mail-Adresse nicht.</p>
+<h2>Video-Links</h2>
+<p>Übungsvideos sind Links: Sie öffnen sich im Browser oder in der Video-App deines Handys (z. B. YouTube), und ab dort gelten die Regeln dieses Dienstes. Raidmate selbst lädt keine Videos herunter und spielt keine ab. Bei Coach-Videos werden auch Name, Bewertung und Tipp des Coaches angezeigt; „Warum sehe ich das?“ erklärt, warum dieses Video zuerst kommt. Es gibt keine bezahlte Werbung.</p>
+<h2>Sicherungen</h2>
+<ul>
+<li>Wenn du in eine Datei speicherst, wählst du den Ort (z. B. Downloads oder Google Drive). Für dort gespeicherte Dateien gelten die Bedingungen dieses Dienstes.</li>
+<li>Die wöchentliche automatische Sicherung bleibt auf dem Handy, im eigenen Ordner der App.</li>
+<li>Wenn die Android-Sicherung eingeschaltet ist, kann das System die Datenbank der App verschlüsselt in deinem Google-Konto sichern (Bilder des Fototagebuchs, das Fehlerprotokoll und der Schlüssel des Online-Kontos sind ausgenommen). Das macht Android, nicht Raidmate, und es lässt sich in den Einstellungen deines Handys ausschalten.</li>
+</ul>
+<h2>Deine Daten löschen</h2>
+<ul>
+<li><strong>Auf dem Handy:</strong> Die Daten werden gelöscht, wenn du die App deinstallierst oder ihre Daten unter Einstellungen → Apps → Raidmate → Speicher des Handys löschst.</li>
+<li><strong>Das Online-Konto:</strong> in der App: Profil → Online-Konto → Konto löschen; alle deine Daten auf dem Server werden sofort gelöscht. Ohne die App: Schreib an <a href="#" data-contact data-contact-text>e-mail</a> von der E-Mail-Adresse deines Kontos („Raidmate account deletion“), und wir löschen es innerhalb von 30 Tagen. Aus etwaigen Sicherungen des Anbieters verschwindet es innerhalb von 30 Tagen.</li>
+</ul>
+<h2>Deine Rechte</h2>
+<ul>
+<li><strong>Auskunft und Datenübertragbarkeit:</strong> Profil → Online-Konto → Meine Daten herunterladen (deine Daten auf dem Server als JSON); den Verlauf auf deinem Handy kannst du unter Profil → Sicherung &amp; Export speichern.</li>
+<li><strong>Berichtigung:</strong> Deinen Anzeigenamen und dein Coach-Profil änderst du in der App; ansonsten schreib uns.</li>
+<li><strong>Löschung:</strong> siehe oben.</li>
+<li><strong>Widerruf der Einwilligung:</strong> Das Teilen mit Freunden lässt sich auf der Freunde-Seite Punkt für Punkt ausschalten; das Konto kann jederzeit gelöscht werden.</li>
+<li><strong>Beschwerde:</strong> bei der ungarischen Nationalen Behörde für Datenschutz und Informationsfreiheit (NAIH, Falk Miksa utca 9–11, 1055 Budapest, www.naih.hu).</li>
+<li><strong>Wenn du uns schreibst</strong> (eine Frage, Feedback, eine Einreichung per E-Mail, Interesse am Shop der Website, eine Datenanfrage): Wir verwenden deine E-Mail-Adresse und deine Nachricht nur, um zu antworten und dein Anliegen zu bearbeiten, und geben sie nicht weiter. Die E-Mails werden im Gmail-Konto von Raidmate (Google) aufbewahrt; wir behalten sie höchstens 1 Jahr nach der Antwort und löschen sie dann. Rechtsgrundlage: Beantwortung deiner Anfrage (berechtigtes Interesse). Im Shop kannst du nicht bezahlen, und wir nehmen keine Bestellungen an.</li>
+</ul>
+<h2>Test (geschlossener Test)</h2>
+<ul>
+<li><strong>Anmeldung:</strong> Wenn du dich als Tester anmeldest, wird deine E-Mail (deine E-Mail-Adresse, die Adresse des Google-Kontos, das du für den Play Store nutzt, und alles andere, was du schreibst, z. B. dein Handymodell) im Gmail-Konto von Raidmate aufbewahrt.</li>
+<li><strong>Die Testerliste:</strong> Wir tragen die Adresse deines Google-Kontos in die Testerliste des geschlossenen Tests in der Google Play Console ein, damit du die Testversion aus dem Play Store installieren kannst. Die Liste sehen nur wir; Google (Google Ireland Ltd.) verarbeitet sie als Teil von Google Play nach seiner eigenen Datenschutzerklärung.</li>
+<li><strong>E-Mails:</strong> Wir schreiben dir möglicherweise zum Test (z. B. den Link zum Beitreten, eine neue Version, eine Frage zu deinem Feedback); keine Newsletter und keine Werbung.</li>
+<li><strong>Abstürze:</strong> Google Play kann uns zusammengefasste Absturz- und Leistungsstatistiken ohne Namen oder Kontaktdaten zeigen (Android Vitals), wenn du deinem Handy erlaubt hast, Diagnosedaten mit Google zu teilen. Diese erhebt Google, nicht Raidmate, und du kannst es in den Einstellungen deines Handys ausschalten.</li>
+<li><strong>Austritt und Löschung:</strong> Du kannst das Programm jederzeit über den Beitrittslink verlassen oder uns schreiben, dann entfernen wir deine Adresse innerhalb von 30 Tagen aus der Liste. Wenn der geschlossene Test endet (wenn die App öffentlich erscheint), löschen wir die Liste und die Anmeldungen spätestens innerhalb von 3 Monaten; Feedback, das du während des Tests schickst, fällt unter „Wenn du uns schreibst“.</li>
+<li><strong>Rechtsgrundlage:</strong> deine Einwilligung (durch die Anmeldung), die du jederzeit widerrufen kannst. Als Tester anmelden kannst du dich, wenn du über 16 bist.</li>
+</ul>
+<h2>Kontakt</h2>
+<p>Verantwortlicher: Tamás Peresztegi (Privatperson), der Entwickler von Raidmate. Anschrift: Árpád utca 136, 7000 Sárbogárd, Ungarn. Für Fragen oder Anliegen schreib an <a href="#" data-contact data-contact-text>e-mail</a>. Wir antworten innerhalb von 30 Tagen.</p>
+<p>Diese deutsche Fassung ist eine Übersetzung; bei Abweichungen ist die ungarische Fassung maßgeblich.</p>
+<p>Gültig ab: 21. Oktober 2026</p>
 </section>
 <p class="muted">hu.tamas.gymbro</p>
 </main>
