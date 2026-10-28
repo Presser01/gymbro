@@ -62,68 +62,6 @@ export function unwrapDataKey(bundle, encKey) {
   return xchacha20poly1305(encKey, nonce).decrypt(sealed);
 }
 
-// ------------------------------------------------- helyreállító kód
-
-const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'; // Crockford-base32
-const RECOVERY_BYTES = 20;
-
-/// A beírt helyreállító kódból a bájtok (kötőjel, szóköz, kisbetű nem
-/// számít; O → 0, I és L → 1), mint az appban. null, ha hibás.
-export function parseRecoveryCode(input) {
-  const s = input
-    .toUpperCase()
-    .replace(/[\s-]/g, '')
-    .replaceAll('O', '0')
-    .replace(/[IL]/g, '1');
-  if (s.length !== Math.ceil((RECOVERY_BYTES * 8) / 5)) return null;
-  const out = [];
-  let acc = 0;
-  let bits = 0;
-  for (const ch of s) {
-    const v = ALPHABET.indexOf(ch);
-    if (v < 0) return null;
-    acc = (acc << 5) | v;
-    bits += 5;
-    if (bits >= 8) {
-      bits -= 8;
-      out.push((acc >> bits) & 255);
-      acc &= (1 << bits) - 1;
-    }
-  }
-  return out.length === RECOVERY_BYTES ? Uint8Array.from(out) : null;
-}
-
-/// Az adatkulcs a helyreállító kóddal (hibás kódnál kivétel).
-export function unwrapWithRecovery(bundle, codeBytes) {
-  const key = hkdf(sha256, codeBytes, enc.encode('gymbro-recovery'), enc.encode('gymbro wrap'), 32);
-  const box = bundle.rc;
-  return xchacha20poly1305(key, base64Decode(box.n)).decrypt(
-    concat(base64Decode(box.c), base64Decode(box.m)),
-  );
-}
-
-/// Új jelszónál: ugyanaz az adatkulcs az új csomagoló kulccsal; a
-/// helyreállító kódos rész változatlan (mint az app rewrapForPassword-je).
-export function rewrapForPassword(bundle, dataKey, encKey) {
-  const nonce = crypto.getRandomValues(new Uint8Array(NONCE));
-  const sealed = xchacha20poly1305(encKey, nonce).encrypt(dataKey);
-  return {
-    kdf: bundle.kdf,
-    pw: {
-      n: base64(nonce),
-      c: base64(sealed.subarray(0, sealed.length - MAC)),
-      m: base64(sealed.subarray(sealed.length - MAC)),
-    },
-    rc: bundle.rc,
-  };
-}
-
-function base64(bytes) {
-  let s = '';
-  for (const b of bytes) s += String.fromCharCode(b);
-  return btoa(s);
-}
-
 /// A szerverről letöltött mentés (.gbk) → a mentés JSON-ja.
 export async function openBackup(bytes, dataKey, userId) {
   if (bytes.length < MAGIC.length + NONCE + MAC || MAGIC.some((b, i) => bytes[i] !== b)) {

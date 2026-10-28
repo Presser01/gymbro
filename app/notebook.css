@@ -180,7 +180,7 @@
 /* Az üzenet egy sárga öntapadós cetli. */
 [data-style="notebook"] .toast { background: var(--postit); color: var(--postit-text); border-radius: 4px; font-size: 18px; }
 
-/* Belépés után a „GymBro” felíródik és aláhúzódik, aztán a lap elhalványul. */
+/* Belépés után az app neve felíródik és aláhúzódik, aztán a lap elhalványul. */
 .nb-intro {
   position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; pointer-events: none;
   animation: nb-fade .22s .8s ease-in both;
