@@ -511,7 +511,7 @@ function renderStats() {
       ? `<select id="liftSelect">${lifts
           .map(
             (h) =>
-              `<option value="${h.exercise.id}"${h === lift ? ' selected' : ''}>${esc(exName(h.exercise))}</option>`,
+              `<option value="${esc(h.exercise.id)}"${h === lift ? ' selected' : ''}>${esc(exName(h.exercise))}</option>`,
           )
           .join('')}</select></div>` +
         lineChart(lift.points, { fmt: (v) => num(v, 1), dateFmt: dayShort, label: t('chartLift') }) +
