@@ -5,7 +5,7 @@
 
 import { Api, ApiError } from './api.js';
 import { barChart, lineChart } from './charts.js';
-import { KDF_V1, deriveAccountKeys, openBackup, unwrapDataKey } from './crypto.js';
+import { KDF_V1, deriveAccountKeys, kdfAcceptable, openBackup, unwrapDataKey } from './crypto.js';
 
 /// A jelszószabály verziója (lib/domain/password_policy.dart,
 /// kPasswordPolicyVersion).
@@ -234,6 +234,10 @@ $('#loginForm').addEventListener('submit', async (ev) => {
     const profile = await api.profile();
     const bundle = profile.key_bundle;
     const kdf = bundle.kdf ?? KDF_V1;
+    // A szerver felől jövő beállítás: csak a mostaninál nem gyengébb és
+    // ésszerű méretű fogadható el (egy feltört szerver se gyengíthesse, és ne
+    // fagyaszthassa le a böngészőt egy óriási memóriaigénnyel).
+    if (!kdfAcceptable(kdf)) throw new Error('invalid backup');
     if (kdf.m !== KDF_V1.m || kdf.t !== KDF_V1.t || (kdf.p ?? 1) !== KDF_V1.p) {
       // Későbbi, szigorúbb paraméterek: a csomagoló kulcs azokkal készült.
       setStep(t('stepKeys'));

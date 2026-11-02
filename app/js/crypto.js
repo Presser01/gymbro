@@ -23,6 +23,14 @@ const MAC = 16;
 
 export const KDF_V1 = { v: 1, m: 32768, t: 2, p: 1 };
 
+/// A kulcscsomagban tárolt beállítás elfogadható-e: legalább az 1. verzió
+/// erőssége, és legfeljebb 256 MiB, 10 kör, 4 szál.
+export function kdfAcceptable(kdf) {
+  const m = kdf?.m, t = kdf?.t, p = kdf?.p ?? 1;
+  return Number.isInteger(m) && Number.isInteger(t) && Number.isInteger(p)
+    && m >= KDF_V1.m && m <= 262144 && t >= KDF_V1.t && t <= 10 && p >= 1 && p <= 4;
+}
+
 export const normalizeEmail = (email) => email.trim().toLowerCase();
 
 function base64Url(bytes) {
