@@ -19,6 +19,7 @@
 <link rel="icon" href="../assets/logo-192.png">
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/icons.css">
+<link rel="stylesheet" href="../assets/ui.css">
 <script>
   // A téma már az első kirajzolás előtt (ne villanjon).
   (function () {
@@ -47,10 +48,8 @@
   [data-theme="light"] {
     --bg: #fbfbfc; --bg2: #f2f2f4; --card: #ffffff; --line: #e6e6ea;
     --text: #111214; --muted: #66676e; --soft: #3d3e44; --header: rgba(251,251,252,.86);
-    --cta-bg: #111214; --cta-fg: #fff; --cta-hover: #2b2c31;
+    --cta-bg: var(--red); --cta-fg: #fff; --cta-hover: #d2383e;
     --chip: rgba(0,0,0,.05);
-    --head: Barlow, system-ui, sans-serif; --head-weight: 600;
-    --head-case: none; --head-spacing: -.02em;
     color-scheme: light;
   }
   * { box-sizing: border-box; }
@@ -82,7 +81,6 @@
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px;
          font: 700 15px Barlow, sans-serif; text-decoration: none; border: 1.5px solid var(--line);
          background: transparent; color: var(--text); cursor: pointer; }
-  [data-theme="light"] .btn { border-radius: 12px; }
   .btn.primary { background: var(--cta-bg); border-color: var(--cta-bg); color: var(--cta-fg); }
   .btn.primary:hover { background: var(--cta-hover); }
 

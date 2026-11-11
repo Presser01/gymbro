@@ -3,6 +3,11 @@
 // a márkanév kerül (brand.js).
 const TEXTS = {
   hu: {
+    menuSettings: "Beállítások",
+    menuTheme: "Téma",
+    menuLang: "Nyelv",
+    themeLightOpt: "Világos",
+    themeDarkOpt: "Sötét",
     navFeatures: 'Funkciók',
     navPrivacy: 'Adatvédelem',
     navWeb: 'Webes nézet',
@@ -169,7 +174,7 @@ const TEXTS = {
     ctaDownload: 'Letöltés Androidra',
     ctaWeb: 'Naplóm a weben',
     badgeFree: 'Ingyenes',
-    badgeLang: 'Magyarul és angolul',
+    badgeLang: 'Magyarul, angolul és németül',
     badgeNoAds: 'Nincs reklám',
     statExercises: 'gyakorlat izomtérképpel',
     statFoods: 'alapanyag tápértékkel',
@@ -218,6 +223,11 @@ const TEXTS = {
     otherLang: 'English',
   },
   en: {
+    menuSettings: "Settings",
+    menuTheme: "Theme",
+    menuLang: "Language",
+    themeLightOpt: "Light",
+    themeDarkOpt: "Dark",
     navFeatures: 'Features',
     navPrivacy: 'Privacy',
     navWeb: 'Web view',
@@ -384,7 +394,7 @@ const TEXTS = {
     ctaDownload: 'Download for Android',
     ctaWeb: 'My log on the web',
     badgeFree: 'Free',
-    badgeLang: 'English and Hungarian',
+    badgeLang: 'English, Hungarian and German',
     badgeNoAds: 'No ads',
     statExercises: 'exercises with muscle maps',
     statFoods: 'foods with nutrition data',
@@ -433,6 +443,11 @@ const TEXTS = {
     otherLang: 'Deutsch',
   },
   de: {
+    menuSettings: "Einstellungen",
+    menuTheme: "Design",
+    menuLang: "Sprache",
+    themeLightOpt: "Hell",
+    themeDarkOpt: "Dunkel",
     navFeatures: 'Funktionen',
     navPrivacy: 'Datenschutz',
     navWeb: 'Web-Ansicht',
@@ -649,7 +664,7 @@ const TEXTS = {
   },
 };
 
-// A nyelvváltó gomb körbe vált: magyar → angol → német → magyar.
+// A nyelvek (a fejléc menüjében ebben a sorrendben).
 const LANGS = ['hu', 'en', 'de'];
 // Ahol nincs német változat (képernyőképek, adatvédelmi oldal), az angol.
 const assetLang = (l) => (l === 'de' ? 'en' : l);
@@ -716,31 +731,79 @@ function currentTheme() {
 
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
-  // A gomb felirata azt mondja, amire vált.
-  const label = TEXTS[lang][theme === 'dark' ? 'themeLight' : 'themeDark'];
-  document.querySelectorAll('[data-theme-toggle]').forEach((b) => {
-    b.title = label;
-    b.setAttribute('aria-label', label);
+}
+
+// Fejléc-menü (Tamás kérése, 2026-11-11): a nyelvgomb és a téma gombja
+// helyett egy fogaskerék nyit lenyíló panelt (Téma, Nyelv).
+const GEAR = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94a7.4 7.4 0 0 0 .05-.94 7.4 7.4 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54a7 7 0 0 0-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.4 7.4 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg>';
+const LANG_NAMES = { hu: 'Magyar', en: 'English', de: 'Deutsch' };
+
+function buildMenu() {
+  const old = document.querySelector('[data-lang-toggle]');
+  if (!old) return null;
+  const wrap = document.createElement('div');
+  wrap.className = 'settings';
+  wrap.innerHTML = `<button class="icon-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="siteMenu">${GEAR}</button>
+    <div class="menu" id="siteMenu" hidden>
+      <label><span data-i18n="menuTheme"></span><select data-menu="theme"></select></label>
+      <label><span data-i18n="menuLang"></span><select data-menu="lang"></select></label>
+    </div>`;
+  old.replaceWith(wrap);
+  document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.remove());
+  const btn = wrap.querySelector('button');
+  const menu = wrap.querySelector('.menu');
+  const setOpen = (open) => {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(menu.hidden);
   });
+  menu.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+  wrap.querySelector('[data-menu="theme"]').addEventListener('change', (e) => {
+    const next = e.target.value === 'light' ? 'light' : 'dark';
+    storePref('theme', next);
+    applyTheme(next);
+  });
+  wrap.querySelector('[data-menu="lang"]').addEventListener('change', (e) => {
+    lang = LANGS.includes(e.target.value) ? e.target.value : 'hu';
+    storePref('lang', lang);
+    applyLang(lang);
+    fillMenu();
+  });
+  return wrap;
+}
+
+function fillMenu() {
+  if (!menuEl) return;
+  const t = TEXTS[lang];
+  const btn = menuEl.querySelector('button');
+  btn.title = t.menuSettings;
+  btn.setAttribute('aria-label', t.menuSettings);
+  const fill = (select, items, selected) => {
+    select.replaceChildren(...items.map(([value, label]) => {
+      const o = document.createElement('option');
+      o.value = value;
+      o.textContent = label;
+      o.selected = value === selected;
+      return o;
+    }));
+  };
+  fill(menuEl.querySelector('[data-menu="theme"]'),
+    [['light', t.themeLightOpt], ['dark', t.themeDarkOpt]], document.documentElement.dataset.theme);
+  fill(menuEl.querySelector('[data-menu="lang"]'), LANGS.map((l) => [l, LANG_NAMES[l]]), lang);
 }
 
 let lang = currentLang();
+const menuEl = buildMenu();
 applyLang(lang);
 applyTheme(currentTheme());
-
-document.querySelectorAll('[data-lang-toggle]').forEach((b) =>
-  b.addEventListener('click', (e) => {
-    e.preventDefault();
-    lang = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
-    storePref('lang', lang);
-    applyLang(lang);
-    applyTheme(document.documentElement.dataset.theme);
-  }),
-);
-document.querySelectorAll('[data-theme-toggle]').forEach((b) =>
-  b.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    storePref('theme', next);
-    applyTheme(next);
-  }),
-);
+fillMenu();

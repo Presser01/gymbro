@@ -1,0 +1,11 @@
+/* Közös fejléc-menü (fogaskerék): téma és nyelv egy lenyíló panelen
+   (2026-11-11; a webes nézetben a stílus is). Az i18n.js építi fel. */
+.settings { position: relative; }
+.settings > .icon-btn[aria-expanded="true"] { background: var(--bg2); }
+.settings .menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 220px;
+                  display: grid; gap: 12px; padding: 14px; border-radius: 16px; text-align: left;
+                  background: var(--card); border: 1px solid var(--line); box-shadow: 0 16px 40px rgba(0,0,0,.35); }
+.settings .menu[hidden] { display: none; }
+.settings label { display: grid; gap: 4px; font: 600 13px Barlow, sans-serif; color: var(--muted); }
+.settings select { font: 600 15px Barlow, sans-serif; color: var(--text); background: var(--bg2);
+                   border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; width: 100%; }

@@ -19,6 +19,7 @@
 <link rel="icon" href="assets/logo-192.png">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/icons.css">
+<link rel="stylesheet" href="assets/ui.css">
 <script>
   // A téma már az első kirajzolás előtt (ne villanjon): a mentett választás,
   // különben a rendszer beállítása.
@@ -46,15 +47,13 @@
     --head-case: uppercase; --head-spacing: -.01em;
     color-scheme: dark;
   }
-  /* Világos téma: a „B” vázlat (letisztult). */
+  /* Világos téma: ugyanaz a sportos kinézet, világos színekkel (2026-11-11). */
   [data-theme="light"] {
     --bg: #fbfbfc; --bg2: #f2f2f4; --card: #ffffff; --line: #e6e6ea;
     --text: #111214; --muted: #66676e; --soft: #3d3e44; --header: rgba(251,251,252,.86);
-    --cta-bg: #111214; --cta-fg: #fff; --cta-hover: #2b2c31;
+    --cta-bg: var(--red); --cta-fg: #fff; --cta-hover: #d2383e;
     --frame: #e3e3e8; --shadow: 0 30px 60px -20px rgba(17,18,20,.35);
     --glow: rgba(229,72,77,.10); --stripe: rgba(0,0,0,.022);
-    --head: Barlow, system-ui, sans-serif; --head-weight: 600;
-    --head-case: none; --head-spacing: -.02em;
     color-scheme: light;
   }
 
@@ -88,7 +87,6 @@
   [data-theme="dark"] .only-light, [data-theme="light"] .only-dark { display: none; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px;
          font-weight: 700; text-decoration: none; border: 1.5px solid var(--line); }
-  [data-theme="light"] .btn { border-radius: 12px; }
   .btn.primary { background: var(--cta-bg); border-color: var(--cta-bg); color: var(--cta-fg); }
   .btn.primary:hover { background: var(--cta-hover); }
   .btn.small { padding: 8px 16px; font-size: 14px; }
@@ -100,7 +98,6 @@
             repeating-linear-gradient(-55deg, transparent 0 22px, var(--stripe) 22px 23px); }
   .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
   .hero h1 { font-size: clamp(46px, 7.2vw, 92px); }
-  [data-theme="light"] .hero h1 { font-size: clamp(42px, 6.2vw, 76px); }
   .hero h1 em { font-style: normal; color: var(--red); }
   .hero p.lead { color: var(--soft); font-size: 20px; max-width: 34ch; margin: 22px 0 28px; }
   .cta { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -123,7 +120,6 @@
   section { padding: 84px 0; }
   .sec-head { max-width: 640px; margin-bottom: 40px; }
   .sec-head h2 { font-size: clamp(34px, 5vw, 56px); margin-top: 8px; }
-  [data-theme="light"] .sec-head h2 { font-size: clamp(32px, 4.5vw, 48px); }
 
   /* funkciók */
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -131,7 +127,6 @@
   .card .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
                background: rgba(229,72,77,.14); color: var(--red); margin-bottom: 16px; }
   .card h3 { font-size: 26px; margin-bottom: 8px; }
-  [data-theme="light"] .card h3 { font-size: 21px; }
   .card p { margin: 0; color: var(--muted); }
 
   /* galéria */
@@ -152,7 +147,6 @@
   .panel { background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 48px 24px; text-align: center;
            background-image: radial-gradient(500px 200px at 50% 0, var(--glow), transparent 70%); }
   .panel h2 { font-size: clamp(32px, 4.5vw, 52px); margin-top: 8px; }
-  [data-theme="light"] .panel h2 { font-size: clamp(30px, 4vw, 44px); }
   .panel p { color: var(--muted); max-width: 54ch; margin: 14px auto 26px; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
@@ -208,7 +202,7 @@
       </div>
       <div class="badges">
         <span data-i18n="badgeFree">Ingyenes</span>
-        <span data-i18n="badgeLang">Magyarul és angolul</span>
+        <span data-i18n="badgeLang">Magyarul, angolul és németül</span>
         <span data-i18n="badgeNoAds">Nincs reklám</span>
       </div>
     </div>

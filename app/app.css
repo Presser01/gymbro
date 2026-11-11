@@ -1,4 +1,5 @@
-/* A webes nézet: a főoldal tokenjei (sötét = A vázlat, világos = B vázlat). */
+/* A webes nézet: a főoldal tokenjei (sötétben és világosban ugyanaz a sportos
+   kinézet, csak a színek mások; 2026-11-11). */
 :root, [data-theme="dark"] {
   --bg: #0d0e10; --bg2: #121317; --card: #1a1b20; --line: #2a2b31;
   --text: #f3f3f5; --muted: #9b9ca3; --header: rgba(13,14,16,.86);
@@ -11,9 +12,8 @@
 [data-theme="light"] {
   --bg: #fbfbfc; --bg2: #f2f2f4; --card: #ffffff; --line: #e6e6ea;
   --text: #111214; --muted: #66676e; --header: rgba(251,251,252,.9);
-  --cta-bg: #111214; --cta-fg: #fff; --cta-hover: #2b2c31;
+  --cta-bg: var(--red); --cta-fg: #fff; --cta-hover: #d2383e;
   --track: #ececf0; --grid: rgba(0,0,0,.07);
-  --head: Barlow, system-ui, sans-serif; --head-weight: 600; --head-case: none;
   color-scheme: light;
 }
 
@@ -56,7 +56,6 @@ h4 { font-size: 15px; color: var(--red); letter-spacing: .08em; text-transform: 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 22px;
        border-radius: 999px; font: 700 16px Barlow, sans-serif; text-decoration: none; cursor: pointer;
        border: 1.5px solid var(--line); background: transparent; color: var(--text); }
-[data-theme="light"] .btn { border-radius: 12px; }
 .btn.small { padding: 7px 14px; font-size: 14px; }
 .btn.primary { background: var(--cta-bg); border-color: var(--cta-bg); color: var(--cta-fg); }
 .btn.primary:hover { background: var(--cta-hover); }
