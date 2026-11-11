@@ -317,7 +317,7 @@ function card(p) {
   const viewLabel = st.view === 'back' ? t('shopBack') : t('shopFront');
   el.innerHTML = `
     <div class="pic">${svg(p, st.view, st.color, `${t(p.name)}, ${t(`c_${st.color}`)}, ${viewLabel}`)}
-      ${hasBack ? `<div class="views" role="group">
+      ${hasBack ? `<div class="views" role="group" aria-label="${t('shopFront')} / ${t('shopBack')}">
         <button type="button" data-view="front" aria-pressed="${st.view === 'front'}">${t('shopFront')}</button>
         <button type="button" data-view="back" aria-pressed="${st.view === 'back'}">${t('shopBack')}</button></div>` : ''}
     </div>
@@ -325,7 +325,7 @@ function card(p) {
       <div class="head"><h3>${t(p.name)}</h3><span class="soon">${t('shopSoon')}</span></div>
       <p>${t(p.desc)}</p>
       <div class="row"><span class="lbl">${t('shopColor')}</span>
-        <div class="swatches">${p.colors.map((k) => `<button type="button" class="sw" data-color="${k}" style="--c:${COLORS[k]}" title="${t(`c_${k}`)}" aria-label="${t(`c_${k}`)}" aria-pressed="${st.color === k}"></button>`).join('')}</div>
+        <div class="swatches" role="group" aria-label="${t('shopColor')}">${p.colors.map((k) => `<button type="button" class="sw" data-color="${k}" style="--c:${COLORS[k]}" title="${t(`c_${k}`)}" aria-label="${t(`c_${k}`)}" aria-pressed="${st.color === k}"></button>`).join('')}</div>
       </div>
       <div class="row">
         ${p.sizes
@@ -335,13 +335,18 @@ function card(p) {
         <a class="btn primary ask" href="${mailto(p)}"><span class="mi i-mail-outline"></span>${t('shopAsk')}</a>
       </div>
     </div>`;
+  const swap = (selector) => {
+    const next = card(p);
+    el.replaceWith(next);
+    next.querySelector(selector)?.focus();
+  };
   el.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => {
     st.view = b.dataset.view;
-    el.replaceWith(card(p));
+    swap(`[data-view="${st.view}"]`);
   }));
   el.querySelectorAll('[data-color]').forEach((b) => b.addEventListener('click', () => {
     st.color = b.dataset.color;
-    el.replaceWith(card(p));
+    swap(`[data-color="${st.color}"]`);
   }));
   const sel = el.querySelector('select');
   if (sel) sel.addEventListener('change', () => {
