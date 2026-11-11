@@ -3,6 +3,13 @@
 
 export const TEXTS = {
   hu: {
+    menuSettings: "Beállítások",
+    menuStyle: "Stílus",
+    menuTheme: "Téma",
+    menuLang: "Nyelv",
+    themeLightOpt: "Világos",
+    themeDarkOpt: "Sötét",
+    themeLocked: "Ez a stílus csak sötét. Világos módhoz válassz Sima vagy Füzet stílust.",
     title: 'Webes nézet',
     loginTitle: 'Naplóm a weben',
     loginLead: 'Lépj be az online fiókoddal. A jelszavadból a böngésző számolja ki a kulcsot, és a titkosított mentésed itt, a gépeden nyílik ki.',
@@ -113,6 +120,13 @@ export const TEXTS = {
     act_custom: 'Saját tevékenység',
   },
   en: {
+    menuSettings: "Settings",
+    menuStyle: "Style",
+    menuTheme: "Theme",
+    menuLang: "Language",
+    themeLightOpt: "Light",
+    themeDarkOpt: "Dark",
+    themeLocked: "This style is dark only. For light mode, choose Regular or Notebook.",
     title: 'Web view',
     loginTitle: 'My log on the web',
     loginLead: 'Log in with your online account. Your browser derives the key from your password, and your encrypted backup opens right here on your computer.',
@@ -221,7 +235,15 @@ export const TEXTS = {
     act_stairs: 'Stair climbing',
     act_hiit: 'HIIT',
     act_custom: 'Custom activity',
-  },  de: {
+  },
+  de: {
+    menuSettings: "Einstellungen",
+    menuStyle: "Stil",
+    menuTheme: "Design",
+    menuLang: "Sprache",
+    themeLightOpt: "Hell",
+    themeDarkOpt: "Dunkel",
+    themeLocked: "Dieser Stil ist nur dunkel. Für das helle Design wähle Normal oder Notizbuch.",
     title: 'Web-Ansicht',
     loginTitle: 'Mein Tagebuch im Web',
     loginLead: 'Melde dich mit deinem Online-Konto an. Dein Browser leitet den Schlüssel aus deinem Passwort ab, und deine verschlüsselte Sicherung öffnet sich direkt hier auf deinem Computer.',

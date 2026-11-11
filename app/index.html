@@ -70,13 +70,17 @@
   <a class="logo" href="../"><img src="../assets/logo-192.png" alt=""><span data-brand>Raidmate</span></a>
   <span class="backup-at" id="backupAt" hidden></span>
   <div class="tools">
-    <button class="lang-btn" type="button" data-lang-toggle><span data-t="otherLang">English</span></button>
-    <button class="icon-btn" type="button" id="styleToggle">
-      <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-    </button>
-    <button class="icon-btn" type="button" data-theme-toggle>
-      <span class="mi i-light-mode only-dark"></span><span class="mi i-dark-mode only-light"></span>
-    </button>
+    <div class="settings">
+      <button class="icon-btn" type="button" id="settingsBtn" aria-haspopup="true" aria-expanded="false" aria-controls="settingsMenu">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94a7.4 7.4 0 0 0 .05-.94 7.4 7.4 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54a7 7 0 0 0-1.62.94l-2.39-.96a.5.5 0 0 0-.61.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.4 7.4 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg>
+      </button>
+      <div class="menu" id="settingsMenu" hidden>
+        <label><span data-t="menuStyle">Stílus</span><select id="styleSelect"></select></label>
+        <label><span data-t="menuTheme">Téma</span><select id="themeSelect"></select></label>
+        <p class="menu-note" id="themeNote" hidden></p>
+        <label><span data-t="menuLang">Nyelv</span><select id="langSelect"></select></label>
+      </div>
+    </div>
     <button class="icon-btn" type="button" id="refresh" hidden>
       <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
     </button>

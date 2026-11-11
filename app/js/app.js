@@ -88,18 +88,49 @@ function applyStatic() {
   document.title = `${t('title')} – ${brand()}`;
   $('#refresh').title = t('refresh');
   $('#refresh').setAttribute('aria-label', t('refresh'));
-  const theme = document.documentElement.dataset.theme;
-  const label = t(theme === 'dark' ? 'themeLight' : 'themeDark');
-  document.querySelectorAll('[data-theme-toggle]').forEach((b) => {
-    b.title = label;
-    b.setAttribute('aria-label', label);
-  });
-  // A gomb a következő stílust mutatja.
-  const style = $('#styleToggle');
-  const next = STYLES[(STYLES.indexOf(currentStyle()) + 1) % STYLES.length];
-  const key = { plain: 'stylePlain', notebook: 'styleNotebook', viking: 'styleViking', oled: 'styleOled' }[next];
-  style.title = t(key);
-  style.setAttribute('aria-label', t(key));
+  fillSettings();
+}
+
+// ------------------------------------------------- Beállítások (fogaskerék)
+// Tamás kérése (2026-11-11): a ceruzás körbeváltó gomb helyett egy
+// lenyíló panel: stílus, téma, nyelv. A Viking és az Akkukímélő csak
+// sötét, ilyenkor a Világos választhatatlan (eddig összeakadt).
+const STYLE_KEYS = { plain: 'stylePlain', notebook: 'styleNotebook', viking: 'styleViking', oled: 'styleOled' };
+const LANG_NAMES = { hu: 'Magyar', en: 'English', de: 'Deutsch' };
+
+function options(select, items, selected) {
+  select.replaceChildren(
+    ...items.map(([value, label, disabled]) => {
+      const o = document.createElement('option');
+      o.value = value;
+      o.textContent = label;
+      o.disabled = Boolean(disabled);
+      o.selected = value === selected;
+      return o;
+    }),
+  );
+}
+
+function fillSettings() {
+  const btn = $('#settingsBtn');
+  btn.title = t('menuSettings');
+  btn.setAttribute('aria-label', t('menuSettings'));
+  const darkOnly = DARK_ONLY.includes(currentStyle());
+  options($('#styleSelect'), STYLES.map((st) => [st, t(STYLE_KEYS[st])]), currentStyle());
+  options(
+    $('#themeSelect'),
+    [['light', t('themeLightOpt'), darkOnly], ['dark', t('themeDarkOpt')]],
+    document.documentElement.dataset.theme,
+  );
+  const note = $('#themeNote');
+  note.hidden = !darkOnly;
+  note.textContent = darkOnly ? t('themeLocked') : '';
+  options($('#langSelect'), LANGS.map((l) => [l, LANG_NAMES[l]]), lang);
+}
+
+function setMenu(open) {
+  $('#settingsMenu').hidden = !open;
+  $('#settingsBtn').setAttribute('aria-expanded', String(open));
 }
 
 // ------------------------------------------------- Füzet stílus
@@ -161,8 +192,21 @@ function playIntro() {
   setTimeout(() => el.remove(), 1100);
 }
 
-$('#styleToggle').addEventListener('click', () => {
-  const next = STYLES[(STYLES.indexOf(currentStyle()) + 1) % STYLES.length];
+$('#settingsBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  setMenu($('#settingsMenu').hidden);
+});
+$('#settingsMenu').addEventListener('click', (e) => e.stopPropagation());
+document.addEventListener('click', () => setMenu(false));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !$('#settingsMenu').hidden) {
+    setMenu(false);
+    $('#settingsBtn').focus();
+  }
+});
+
+$('#styleSelect').addEventListener('change', (e) => {
+  const next = e.target.value;
   storePref('style', next);
   setStyle(next, storedPref('pen'));
   applyStatic();
@@ -170,22 +214,21 @@ $('#styleToggle').addEventListener('click', () => {
   playIntro();
 });
 
-document.querySelectorAll('[data-lang-toggle]').forEach((b) =>
-  b.addEventListener('click', () => {
-    lang = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
-    storePref('lang', lang);
-    applyStatic();
-    render();
-  }),
-);
-document.querySelectorAll('[data-theme-toggle]').forEach((b) =>
-  b.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    storePref('theme', next);
-    applyStatic();
-  }),
-);
+$('#themeSelect').addEventListener('change', (e) => {
+  if (DARK_ONLY.includes(currentStyle())) return;
+  const next = e.target.value === 'light' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  storePref('theme', next);
+  applyStatic();
+  render();
+});
+
+$('#langSelect').addEventListener('change', (e) => {
+  lang = LANGS.includes(e.target.value) ? e.target.value : 'hu';
+  storePref('lang', lang);
+  applyStatic();
+  render();
+});
 
 // ------------------------------------------------------- állapot
 

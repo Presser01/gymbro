@@ -145,7 +145,8 @@ const T = {
       running: 'Running', nutrition: 'Nutrition',
     },
     countries: { HU: 'Hungary', AT: 'Austria', SK: 'Slovakia', RO: 'Romania', RS: 'Serbia', DE: 'Germany' },
-  },  de: {
+  },
+  de: {
     count: (n) => (n === 1 ? '1 Trainer' : `${n} Trainer`),
     none: 'Noch keine Trainer in der Suche. Bist du Trainer? Bewirb dich in der App: Profil → Online-Konto → Mein Trainerprofil.',
     empty: 'Keine passenden Trainer. Versuch es mit weniger Filtern.',
