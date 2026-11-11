@@ -6,7 +6,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Raidmate">
 <meta property="og:title" content="Bolt – Raidmate">
-<meta property="og:description" content="Raidmate pólók, pulóverek, nadrágok és kiegészítők: elöl kicsi jelvény, hátul nagy kabala.">
+<meta property="og:description" content="Raidmate pólók, pulóverek, táskák és kiegészítők többféle mintával. Nem rendelhetők: jelenleg igényfelmérés zajlik.">
 <meta property="og:url" content="https://presser01.github.io/gymbro/bolt/">
 <meta property="og:image" content="https://presser01.github.io/gymbro/assets/og.jpg">
 <meta property="og:image:width" content="1200">
@@ -15,7 +15,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bolt – {brand}</title>
-<meta name="description" content="Raidmate pólók, pulóverek, nadrágok és kiegészítők: elöl kicsi jelvény, hátul nagy kabala.">
+<meta name="description" content="Raidmate pólók, pulóverek, táskák és kiegészítők többféle mintával. Nem rendelhetők: jelenleg igényfelmérés zajlik.">
 <link rel="icon" href="../assets/logo-192.png">
 <link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="../assets/icons.css">
@@ -135,6 +135,27 @@
   .one { font-weight: 600; }
   .ask { margin-left: auto; padding: 8px 16px; }
 
+  /* „Nem rendelhető” sáv: jól látható, minden nyelven. */
+  .notice-bar { display: flex; gap: 10px; align-items: flex-start; margin: 4px 0 16px; padding: 12px 16px;
+                border-radius: 14px; font-weight: 600; color: var(--text);
+                background: color-mix(in srgb, var(--red) 12%, var(--bg2));
+                border: 1px solid color-mix(in srgb, var(--red) 50%, var(--line)); }
+  .notice-bar::before { content: '!'; flex: none; display: grid; place-items: center; width: 22px; height: 22px;
+                        border-radius: 50%; background: var(--red); color: #fff; font-weight: 800; font-size: 14px; }
+  .soon { color: var(--red); }
+  /* Forgatás: elhúzással (a függőleges görgetés megmarad) és 3D-s fordulással. */
+  .pic.spin { cursor: grab; touch-action: pan-y; }
+  .pic.spin:active { cursor: grabbing; }
+  .views.rot { align-items: center; }
+  .views.rot button { font-size: 18px; line-height: 22px; padding: 2px 12px; }
+  .views.rot span { color: #fff; font: 700 13px Barlow, sans-serif; min-width: 56px; text-align: center; }
+  .hint { position: absolute; right: 12px; bottom: 10px; font-size: 12px; color: var(--muted); }
+  .pic svg.turn-r { animation: turnR .34s ease-out; }
+  .pic svg.turn-l { animation: turnL .34s ease-out; }
+  @keyframes turnR { from { transform: perspective(900px) rotateY(-75deg) scale(.95); opacity: .35; } }
+  @keyframes turnL { from { transform: perspective(900px) rotateY(75deg) scale(.95); opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) { .pic svg.turn-r, .pic svg.turn-l { animation: none; } }
+
   .note { background: var(--bg2); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; margin: 0 0 14px; }
   .note h3 { font-size: 24px; margin-bottom: 6px; }
   .note p { margin: 0; color: var(--soft); }
@@ -173,8 +194,9 @@
   <div class="intro">
     <div class="eyebrow" data-i18n="shopEyebrow">Bolt</div>
     <h1 data-i18n="shopTitle">Raidmate cuccok</h1>
-    <p data-i18n="shopLead">Pólók, pulóverek, nadrágok és kiegészítők: elöl kicsi jelvény, hátul nagy kabala.</p>
+    <p data-i18n="shopLead">Pólók, pulóverek, táskák és kiegészítők, többféle mintával: a teljesen egyszerűtől a nagy hátmintáig.</p>
   </div>
+  <p class="notice-bar" role="note" data-i18n="shopNotice">A termékek nem rendelhetők: jelenleg kizárólag igényfelmérés zajlik. Az „Érdekel” gomb nem rendelés, csak jelzi nekünk, mi tetszene.</p>
   <div class="filters" role="group">
     <button type="button" data-filter="all" data-i18n="shopAll">Mind</button>
     <button type="button" data-filter="tops" data-i18n="shopTops">Felsők</button>
