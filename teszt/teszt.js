@@ -1,7 +1,7 @@
 // A jelentkezés kitöltött levele a választott nyelven (a cím a brand.js-ből,
 // a szöveg az i18n.js-ből). Nyelvváltáskor újra.
 function testMail() {
-  const lang = document.documentElement.lang === 'en' ? 'en' : 'hu';
+  const lang = TEXTS[document.documentElement.lang] ? document.documentElement.lang : 'hu';
   const t = (key) => TEXTS[lang][key].replaceAll('{brand}', BRAND.name);
   const href = `mailto:${BRAND.contactEmail}`
     + `?subject=${encodeURIComponent(t('testMailSubject'))}`

@@ -290,7 +290,7 @@ function extra(kind, c, isLight, id) {
 }
 
 function t(key) {
-  const lang = document.documentElement.lang === 'en' ? 'en' : 'hu';
+  const lang = TEXTS[document.documentElement.lang] ? document.documentElement.lang : 'hu';
   return (TEXTS[lang][key] || key).replaceAll('{brand}', BRAND.name);
 }
 

@@ -47,12 +47,17 @@ function storePref(key, value) {
 }
 
 const params = new URLSearchParams(location.search);
+// A nyelvváltó körbe vált: magyar → angol → német. A mentésben csak magyar
+// és angol nevek vannak, ezért németül az angol nevek látszanak.
+const LANGS = ['hu', 'en', 'de'];
 let lang = (() => {
   const forced = params.get('lang');
-  if (forced === 'hu' || forced === 'en') return forced;
+  if (LANGS.includes(forced)) return forced;
   const saved = storedPref('lang');
-  if (saved === 'hu' || saved === 'en') return saved;
-  return (navigator.language || 'hu').toLowerCase().startsWith('hu') ? 'hu' : 'en';
+  if (LANGS.includes(saved)) return saved;
+  const nav = (navigator.language || 'hu').toLowerCase();
+  if (nav.startsWith('hu')) return 'hu';
+  return nav.startsWith('de') ? 'de' : 'en';
 })();
 
 const brand = () => (typeof BRAND === 'object' ? BRAND.name : 'Raidmate');
@@ -63,7 +68,7 @@ function t(key, vars = {}) {
   return s.replaceAll('{brand}', brand());
 }
 
-const locale = () => (lang === 'hu' ? 'hu-HU' : 'en-GB');
+const locale = () => ({ hu: 'hu-HU', de: 'de-DE' })[lang] || 'en-GB';
 const num = (v, digits = 0) =>
   new Intl.NumberFormat(locale(), { maximumFractionDigits: digits, minimumFractionDigits: 0 }).format(v);
 const dayLong = (d) =>
@@ -167,7 +172,7 @@ $('#styleToggle').addEventListener('click', () => {
 
 document.querySelectorAll('[data-lang-toggle]').forEach((b) =>
   b.addEventListener('click', () => {
-    lang = lang === 'hu' ? 'en' : 'hu';
+    lang = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
     storePref('lang', lang);
     applyStatic();
     render();
@@ -558,7 +563,7 @@ function renderDiet() {
     if (l.food) return lang === 'hu' ? l.food.name_hu : l.food.name_en;
     return l.name;
   };
-  const amount = (l) => (l.unit == null ? t('servings', { n: num(l.amount, 2) }) : `${num(l.amount, 1)} ${l.unit === 'pcs' ? (lang === 'hu' ? 'db' : 'pcs') : l.unit === 'clove' ? (lang === 'hu' ? 'gerezd' : 'clove') : l.unit}`);
+  const amount = (l) => (l.unit == null ? t('servings', { n: num(l.amount, 2) }) : `${num(l.amount, 1)} ${l.unit === 'pcs' ? ({ hu: 'db', de: 'Stk.' }[lang] || 'pcs') : l.unit === 'clove' ? ({ hu: 'gerezd', de: 'Zehe' }[lang] || 'clove') : l.unit}`);
   return (
     `<h1>${esc(t('navDiet'))}</h1>` +
     days

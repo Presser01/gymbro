@@ -1,4 +1,4 @@
-// Magyar és angol szövegek. A HTML-ben a magyar áll (JavaScript nélkül is
+// Magyar, angol és német szövegek (a német 2026-11-11 óta). A HTML-ben a magyar áll (JavaScript nélkül is
 // olvasható); ez a fájl a data-i18n kulcsok alapján cseréli. A {brand} helyére
 // a márkanév kerül (brand.js).
 const TEXTS = {
@@ -400,9 +400,214 @@ const TEXTS = {
     footContact: 'Contact',
     themeLight: 'Light theme',
     themeDark: 'Dark theme',
+    otherLang: 'Deutsch',
+  },
+  de: {
+    navFeatures: 'Funktionen',
+    navPrivacy: 'Datenschutz',
+    navWeb: 'Web-Ansicht',
+    navCoaches: 'Trainer',
+    navHome: 'Startseite',
+    coachesEyebrow: 'Trainersuche',
+    coachesTitle: 'Finde deinen Trainer',
+    coachesLead: 'Personal Trainer und Online-Coaches, die sich in {brand} beworben haben und die wir freigegeben haben. Die Suche läuft in deinem Browser: Wir senden nicht, wonach du gesucht hast.',
+    coachesLoading: 'Wird geladen…',
+    coachesPlansLink: 'Bist du Trainer? Pakete für Trainer →',
+    plansEyebrow: 'Für Trainer',
+    plansTitle: 'Pakete für Trainer',
+    plansLead: 'Die Trainersuche und die Übungsvideos sind zum Start kostenlos. Mit Pro und Premium bekommst du mehr Videos, Premium bringt zusätzlich das Label „Empfohlen“.',
+    plansSoon: 'Demnächst',
+    plansFree: 'Kostenlos',
+    planBasic: 'Basic',
+    planPro: 'Pro',
+    planPremium: 'Premium',
+    planBasicPrice: '0 €',
+    planProPrice: '5 € / Monat',
+    planProYear: 'oder 49 € / Jahr (1.990 HUF / Monat, 18.990 HUF / Jahr)',
+    planPremiumPrice: '12 € / Monat',
+    planPremiumYear: 'oder 119 € / Jahr (4.490 HUF / Monat, 44.990 HUF / Jahr)',
+    planListing: 'Profil in der Trainersuche (in der App und hier)',
+    planVideos10: '10 Übungsvideos, 1 pro Übung',
+    planVideos30: '30 Übungsvideos, 2 pro Übung',
+    planVideos100: '100 Übungsvideos, 3 pro Übung',
+    planRatings: 'Bewertungen und das Abzeichen „Geprüfte Qualifikation“',
+    planFeatured: 'Label „Empfohlen“: Deine Videos erscheinen eher zuerst, und du stehst in der Suche etwas weiter oben',
+    plansFairTitle: 'Faire Hervorhebung',
+    plansFairText: 'Hervorhebung ist immer gekennzeichnet. Mindestens 30 % der oberen Plätze gehen an andere Trainer, und Trainer mit geprüfter Qualifikation sowie die Favoriten der Nutzer stehen weiterhin vorn.',
+    plansHowTitle: 'Wie bekomme ich es?',
+    plansHowText: 'Bezahlungen sind noch nicht gestartet. Bis dahin kannst du in der App eine Stufe anfragen (Profil → Online-Konto → Mein Trainerprofil → Stufe anfragen); wenn die Prüfung sie gewährt, bekommst du sie eine Zeit lang kostenlos. Die ersten Trainer erhalten als Gründungstrainer 12 Monate Pro.',
+    plansBack: '← Zurück zu den Trainern',
+    navDownload: 'Download',
+    navShop: 'Shop',
+    shopEyebrow: 'Shop',
+    shopTitle: '{brand}-Ausrüstung',
+    shopLead: 'T-Shirts, Hoodies, Hosen und Zubehör: vorne ein kleines Emblem, auf dem Rücken der Oberteile das große Maskottchen. Der Shop verkauft noch nicht. Such dir aus, was dir gefällt, und schreib uns: Sobald genug Interesse da ist, startet die Produktion.',
+    shopSoon: 'Demnächst',
+    shopAll: 'Alle',
+    shopTops: 'Oberteile',
+    shopBottoms: 'Hosen',
+    shopExtras: 'Zubehör',
+    shopFront: 'Vorne',
+    shopBack: 'Hinten',
+    shopColor: 'Farbe',
+    shopSize: 'Größe',
+    shopOneSize: 'Einheitsgröße',
+    shopAsk: 'Interessiert',
+    shopHowTitle: 'Wie funktioniert das?',
+    shopHowText: 'Bezahlen ist noch nicht möglich. Der Button „Interessiert“ öffnet eine vorausgefüllte E-Mail in deinem Mailprogramm, die du vor dem Senden bearbeiten kannst. Sobald die Produktion startet, antworten wir mit Preis und Bestellweg. Deine E-Mail-Adresse nutzen wir nur für die Antwort.',
+    shopPrintTitle: 'Zu den Drucken',
+    shopPrintText: 'Vorne ein kleines einfarbiges Emblem (hell auf dunkler Kleidung, dunkel auf heller), auf dem Rücken der Oberteile das ganze Maskottchen mit dem Schriftzug RAIDMATE. Die Bilder sind Entwürfe; das fertige Stück kann leicht abweichen.',
+    navTest: 'Für Tester',
+    testEyebrow: 'Geschlossener Test – startet bald',
+    testTitle: 'Werde Tester!',
+    testLead: 'Hilf mit, {brand} vor dem Start besser zu machen. Nutze die App zwei Wochen beim Training und sag uns, was dir gefallen hat, was nicht und was nicht funktioniert hat. Der Test startet bald: Melde dich jetzt an, wir schicken dir den Link per E-Mail, sobald es losgeht.',
+    testJoin: 'Per E-Mail anmelden',
+    testHowLink: 'Wie funktioniert das?',
+    testChip1: 'Etwa 2 Wochen',
+    testChip2: 'Android 7 oder neuer',
+    testChip3: 'Kostenlos, ohne Werbung',
+    testChip4: 'Kein Konto nötig',
+    testStepsTitle: 'So machst du mit',
+    testStep1Title: 'Anmelden',
+    testStep1Text: 'Der Button öffnet eine fertige E-Mail. Ergänze die Adresse des Google-Kontos, das du für den Play Store nutzt, und dein Handymodell.',
+    testStep2Title: 'Link erhalten',
+    testStep2Text: 'Wir setzen dich auf die Testerliste. Wenn der Test startet, schicken wir dir den Link zum Beitreten; bis dahin musst du nichts tun.',
+    testStep3Title: 'Installieren',
+    testStep3Text: 'Nimm die Einladung über den Link an und installiere {brand} aus dem Play Store. Updates kommen von dort automatisch.',
+    testStep4Title: '14 Tage dabei bleiben',
+    testStep4Text: 'Google verlangt vor dem Start einen 14-tägigen geschlossenen Test. Bleib mindestens so lange im Programm und nutze die App beim Training.',
+    testTryTitle: 'Was du ausprobieren kannst',
+    testTryLead: 'Du musst nicht alles prüfen: Nutze die App so, wie du es normalerweise tun würdest. Besonders interessiert uns Folgendes.',
+    testTry1Title: 'Ein ganzes Training',
+    testTry1Text: 'Plan auswählen, Gewichte und Wiederholungen eintragen, Pause, und ob der Vorschlag fürs nächste Mal Sinn ergibt.',
+    testTry2Title: 'Timer bei gesperrtem Bildschirm',
+    testTry2Text: 'Melden sich das Pausenende, der Plank-Timer und die Laufabschnitte pünktlich, wenn das Handy in der Tasche ist?',
+    testTry3Title: 'Cardio und Laufen',
+    testTry3Text: 'Laufprogramm für Anfänger, Stoppuhr, HIIT, und ob die gemessene Zeit stimmt.',
+    testTry4Title: 'Ernährung',
+    testTry4Text: 'Mahlzeiten eintragen, Barcodes scannen, tägliche Kalorien- und Makroziele.',
+    testTry5Title: 'Sichern und Wiederherstellen',
+    testTry5Text: 'In eine Datei sichern und wiederherstellen, auch auf einem anderen Handy. Das ist am wichtigsten: Niemand soll sein Trainingstagebuch verlieren.',
+    testTry6Title: 'Stile',
+    testTry6Text: 'Notizbuch, Wikinger, Pixel, Akkusparer, eigene Farben, hell und dunkel: Welcher gefällt dir, und wo ist etwas schwer lesbar?',
+    testTry7Title: 'Online-Konto, wenn du magst',
+    testTry7Text: 'Freunde, Team-Challenges, verschlüsselte Sicherung, Zwei-Faktor-Bestätigung und die Web-Ansicht. Die Registrierung geht vorerst nur mit Einladung: Frag bei der Anmeldung danach.',
+    testTry8Title: 'Alles, was seltsam ist',
+    testTry8Text: 'Langsam, verwirrend, ein Tippfehler, eine schlechte Übersetzung oder etwas fehlt: Alles zählt.',
+    testFbTitle: 'So sendest du Feedback',
+    testFb1Title: 'Aus der App',
+    testFb1Path: 'Einstellungen → Hilfe & Info → Feedback senden.',
+    testFb1Text: 'Es öffnet sich eine fertige E-Mail mit der App-Version und deinem Handymodell; du kannst sie vor dem Senden bearbeiten.',
+    testFb2Title: 'Per E-Mail',
+    testFb2Text: 'Schreib jederzeit, auch nur einen Satz:',
+    testFbTip: 'Tipp: Ein Screenshot hilft sehr. Schreib, was du getan hast, was du erwartet hast und was stattdessen passiert ist.',
+    testFaqTitle: 'Häufige Fragen',
+    testQ1: 'Muss ich etwas bezahlen?',
+    testA1: 'Nein. {brand} ist kostenlos, ohne Werbung und ohne In-App-Käufe.',
+    testQ2: 'Brauche ich ein Konto?',
+    testA2: 'Nein. Ohne Konto sendet die App von sich aus nichts irgendwohin; alles bleibt auf deinem Handy. Das Online-Konto (Freunde, verschlüsselte Sicherung, Web-Ansicht) ist optional.',
+    testQ3: 'Warum fragt sie nach der Berechtigung für Benachrichtigungen?',
+    testA3: 'Sie nutzt Benachrichtigungen für das Pausenende, den Wechsel der Laufabschnitte und Erinnerungen, damit du sie auch bei gesperrtem Bildschirm hörst. Ohne die Berechtigung funktioniert sie auch, aber die Timer bleiben stumm.',
+    testQ4: 'Bleiben meine Daten nach dem Test erhalten?',
+    testA4: 'Ja. Die Testversion wird im Play Store zur finalen Version aktualisiert, und deine Daten bleiben auf dem Handy. Sichere trotzdem ab und zu in eine Datei (Profil → Sicherung & Export).',
+    testQ5: 'Wie steige ich aus?',
+    testA5: 'Du kannst das Programm jederzeit über den Beitrittslink verlassen, oder schreib uns, dann entfernen wir deine Adresse aus der Liste. Die App bleibt auf deinem Handy; du kannst sie selbst deinstallieren.',
+    testQ6: 'Was passiert mit meiner E-Mail-Adresse?',
+    testA6: 'Wir nutzen sie nur für die Testerliste und E-Mails zum Test und löschen sie, wenn der Test endet.',
+    testA6Link: 'Details in der Datenschutzerklärung (Test)',
+    testQ7: 'Gibt es eine iPhone-Version?',
+    testA7: 'Noch nicht; vorerst gibt es nur Android. Mit einem Online-Konto kannst du dein Trainingstagebuch aber im Browser ansehen.',
+    testCtaTitle: 'Bist du dabei?',
+    testCtaText: 'Eine kurze E-Mail, und du stehst auf der Liste. Wir melden uns, wenn es losgeht.',
+    testConsent: 'Mit der Anmeldung stimmst du zu, dass wir deine E-Mail-Adresse für die Testerliste und E-Mails zum Test verwenden. Du musst über 16 sein, um dich anzumelden.',
+    testMailSubject: '{brand}-Test – Anmeldung',
+    testMailBody: 'Hallo!\n\nIch möchte gern Tester werden.\n\nAdresse meines Google-Kontos (die ich für den Play Store nutze): \nMein Handymodell: \n\nDanke!',
+    pTee: 'T-Shirt',
+    pTank: 'Tanktop',
+    pHoodie: 'Hoodie',
+    pJoggers: 'Jogginghose',
+    pShorts: 'Shorts',
+    pCap: 'Baseballcap',
+    pBag: 'Sporttasche',
+    pTowel: 'Handtuch',
+    pShaker: 'Shaker',
+    dTee: 'Baumwoll-T-Shirt: vorne kleines Emblem, hinten großes Maskottchen.',
+    dTank: 'Lockeres ärmelloses Tanktop mit dem großen Maskottchen auf dem Rücken.',
+    dHoodie: 'Schwerer Hoodie mit Kängurutasche und dem großen Maskottchen auf dem Rücken.',
+    dJoggers: 'Jogginghose mit Bündchen und kleinem Emblem am Oberschenkel.',
+    dShorts: 'Leichte Trainingsshorts mit kleinem Emblem am Oberschenkel.',
+    dCap: 'Gesticktes Emblem vorne.',
+    dBag: 'Geräumige Sporttasche mit dem Emblem an der Seite.',
+    dTowel: 'Sporthandtuch mit dem Emblem in der Ecke.',
+    dShaker: '700-ml-Shaker mit dem Emblem.',
+    c_black: 'Schwarz',
+    c_graphite: 'Graphit',
+    c_white: 'Weiß',
+    c_coral: 'Koralle',
+    mailSubject: '{brand}-Shop – Interesse: {product}',
+    mailBody: 'Hallo!\n\nIch hätte Interesse an Folgendem aus dem {brand}-Shop:\n– Artikel: {product}\n– Farbe: {color}\n– Größe: {size}\n– Menge: 1\n\n',
+    heroEyebrow: 'Trainingstagebuch für Android',
+    heroTitleA: 'Training. Cardio.',
+    heroTitleB: 'Ernährung.',
+    heroTitleC: 'Alles an einem Ort.',
+    heroLead: 'Ein Offline-Trainingstagebuch, das deine Daten auf deinem Handy behält. Komplett ohne Konto – ohne Werbung, ohne Tracking.',
+    ctaDownload: 'Für Android herunterladen',
+    ctaWeb: 'Mein Tagebuch im Web',
+    badgeFree: 'Kostenlos',
+    badgeLang: 'Deutsch, Englisch und Ungarisch',
+    badgeNoAds: 'Ohne Werbung',
+    statExercises: 'Übungen mit Muskelkarten',
+    statFoods: 'Lebensmittel mit Nährwerten',
+    statMedals: 'Medaillenstufen',
+    statAds: 'Werbung und Tracking',
+    featEyebrow: 'Funktionen',
+    featTitle: 'Alles, was ein Training braucht',
+    f1Title: 'Trainingstagebuch',
+    f1Text: 'Pläne, Sätze, Rekorde. Die App schlägt Gewichte vor, erkennt Plateaus und sagt dir, wann eine Deload-Woche fällig ist.',
+    f2Title: 'Cardio und HIIT',
+    f2Text: 'Laufprogramm für Anfänger, Stoppuhr mit Abschnitten, HIIT-Timer und geschätzte Kalorien – genau auch bei gesperrtem Bildschirm.',
+    f3Title: 'Ernährung',
+    f3Text: 'Wochenplan, Rezepte, Einkaufsliste, Barcode-Scanner und Makros auf einen Blick.',
+    f4Title: 'Medaillen und Challenges',
+    f4Text: 'Tägliche Challenge, Medaillen von Bronze bis Diamant und eine Wochenserie, die dich dranbleiben lässt.',
+    f5Title: 'Freunde',
+    f5Text: 'Wochenrangliste, Anfeuern und Team-Challenges – dein detailliertes Tagebuch wird nie gezeigt.',
+    f6Title: 'Verschlüsselte Sicherung',
+    f6Text: 'Ende-zu-Ende-verschlüsselt: Nur du hast den Schlüssel, selbst der Server kann sie nicht lesen.',
+    capHome: 'Startseite',
+    capSession: 'Während des Trainings',
+    capStats: 'Statistik',
+    capDiet: 'Ernährung',
+    capRun: 'Laufen',
+    privEyebrow: 'Datenschutz',
+    privTitle: 'Deine Daten gehören dir',
+    priv1: 'Ohne Konto sendet die App von sich aus nichts irgendwohin – alles bleibt auf deinem Handy.',
+    priv2: 'Keine Werbung, keine Analyse, kein Datenverkauf.',
+    priv3: 'Das Online-Konto ist optional; die Sicherung ist Ende-zu-Ende-verschlüsselt.',
+    priv4: 'Der Server steht in der EU; lade deine Daten jederzeit herunter oder lösche sie.',
+    privMore: 'Datenschutzerklärung (Englisch/Ungarisch)',
+    webEyebrow: 'Web-Ansicht',
+    webTitle: 'Dein Tagebuch im Browser',
+    webText: 'Melde dich mit deinem Online-Konto an: Deine verschlüsselte Sicherung öffnet sich in deinem Browser, und der Schlüssel verlässt nie deinen Computer. Tagebuch, Statistik, Freunde – auf großem Bildschirm.',
+    webLogin: 'Anmelden',
+    dlEyebrow: 'Download',
+    dlTitle: 'Bald bei Google Play',
+    dlText: '{brand} ist gerade im geschlossenen Test. Wenn du es ausprobieren möchtest, siehst du hier, wie du mitmachen kannst.',
+    dlContact: 'Beim Test mitmachen',
+    footPrivacy: 'Datenschutz',
+    footTerms: 'Nutzungsbedingungen',
+    footDelete: 'Konto löschen',
+    footContact: 'Kontakt',
+    themeLight: 'Helles Design',
+    themeDark: 'Dunkles Design',
     otherLang: 'Magyar',
   },
 };
+
+// A nyelvváltó gomb körbe vált: magyar → angol → német → magyar.
+const LANGS = ['hu', 'en', 'de'];
+// Ahol nincs német változat (képernyőképek, adatvédelmi oldal), az angol.
+const assetLang = (l) => (l === 'de' ? 'en' : l);
 
 function storedPref(key) {
   try {
@@ -425,10 +630,12 @@ const params = new URLSearchParams(location.search);
 
 function currentLang() {
   const forced = params.get('lang');
-  if (forced === 'hu' || forced === 'en') return forced;
+  if (LANGS.includes(forced)) return forced;
   const saved = storedPref('lang');
-  if (saved === 'hu' || saved === 'en') return saved;
-  return (navigator.language || 'hu').toLowerCase().startsWith('hu') ? 'hu' : 'en';
+  if (LANGS.includes(saved)) return saved;
+  const nav = (navigator.language || 'hu').toLowerCase();
+  if (nav.startsWith('hu')) return 'hu';
+  return nav.startsWith('de') ? 'de' : 'en';
 }
 
 function applyLang(lang) {
@@ -447,10 +654,10 @@ function applyLang(lang) {
     }
   });
   document.querySelectorAll('img[data-screen]').forEach((img) => {
-    img.src = `assets/screens/${lang}_${img.dataset.screen}.webp`;
+    img.src = `assets/screens/${assetLang(lang)}_${img.dataset.screen}.webp`;
   });
   document.querySelectorAll('[data-href-lang]').forEach((a) => {
-    a.href = a.dataset.hrefLang.replace('{lang}', lang);
+    a.href = a.dataset.hrefLang.replace('{lang}', assetLang(lang));
   });
 }
 
@@ -479,7 +686,7 @@ applyTheme(currentTheme());
 document.querySelectorAll('[data-lang-toggle]').forEach((b) =>
   b.addEventListener('click', (e) => {
     e.preventDefault();
-    lang = lang === 'hu' ? 'en' : 'hu';
+    lang = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
     storePref('lang', lang);
     applyLang(lang);
     applyTheme(document.documentElement.dataset.theme);

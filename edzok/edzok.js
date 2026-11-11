@@ -145,6 +145,74 @@ const T = {
       running: 'Running', nutrition: 'Nutrition',
     },
     countries: { HU: 'Hungary', AT: 'Austria', SK: 'Slovakia', RO: 'Romania', RS: 'Serbia', DE: 'Germany' },
+  },  de: {
+    count: (n) => (n === 1 ? '1 Trainer' : `${n} Trainer`),
+    none: 'Noch keine Trainer in der Suche. Bist du Trainer? Bewirb dich in der App: Profil → Online-Konto → Mein Trainerprofil.',
+    empty: 'Keine passenden Trainer. Versuch es mit weniger Filtern.',
+    clear: 'Filter zurücksetzen',
+    error: 'Die Trainerliste kann gerade nicht geladen werden. Versuch es später noch einmal.',
+    retry: 'Erneut versuchen',
+    search: 'Suche',
+    searchHint: 'Name, Fachgebiet, Studio…',
+    how: 'Wie',
+    both: 'Egal',
+    inPerson: 'Vor Ort',
+    online: 'Online',
+    county: 'Komitat',
+    city: 'Ort',
+    specialty: 'Fachgebiet',
+    language: 'Sprache',
+    maxPrice: 'Einheit bis',
+    gym: 'Studio',
+    order: 'Reihenfolge',
+    any: 'Alle',
+    sortMixed: 'Empfohlen (geprüfte zuerst)',
+    sortPrice: 'Nach Preis',
+    sortNewest: 'Neueste zuerst',
+    priceUpTo: (p) => `bis ${p} HUF`,
+    onlineNote: 'Online-Trainer werden unabhängig vom Ort angezeigt.',
+    moreFilters: 'Weitere Filter',
+    sortRating: 'Nach Bewertung',
+    minStars: 'Bewertung mindestens',
+    stars: (v) => `${v} ★`,
+    ratingLine: (avg, n) => `${avg} ★ (${n === 1 ? '1 Bewertung' : `${n} Bewertungen`})`,
+    ratingFew: 'Noch nicht genug Bewertungen',
+    rateInApp: 'Bewerten kannst du in der App mit einem Online-Konto, das mindestens 7 Tage alt ist. Andere sehen erst ab 3 Bewertungen nur die Gesamtwerte. Wir prüfen nicht, ob die bewertende Person wirklich mit dem Trainer trainiert hat; Bewertungen, die nicht echt wirken, werden gelöscht.',
+    tags: {
+      explains: 'Erklärt gut', motivating: 'Motivierend', precise: 'Genau', flexible: 'Flexibel',
+      technique: 'Gute Technik', patient: 'Geduldig', effective: 'Bringt Ergebnisse', value: 'Gutes Preis-Leistungs-Verhältnis',
+    },
+    verified: 'Geprüfte Qualifikation',
+    featured: 'Empfohlen',
+    featuredInfo: 'Empfohlen: ein Trainer der Stufe Premium. Er erscheint in der empfohlenen Reihenfolge etwas weiter oben; Trainer mit geprüfter Qualifikation stehen weiterhin vorn.',
+    selfDeclared: 'eigene Angabe des Trainers',
+    session: 'Einheit',
+    month: 'Online monatlich',
+    from: (p) => `ab ${p} HUF`,
+    agreement: 'Nach Vereinbarung',
+    gyms: 'Studio',
+    languages: 'Sprachen',
+    price: 'Richtpreis',
+    qualification: 'Qualifikationen',
+    since: 'In der Suche seit',
+    contactNote: 'Kontaktiere den Trainer direkt über die Angaben oben. Raidmate leitet keine Nachrichten oder Zahlungen weiter und ist nicht Partei eurer Vereinbarung.',
+    copy: 'Link kopieren',
+    copied: 'Link kopiert',
+    report: 'Per E-Mail melden',
+    reportSubject: (slug) => `Meldung eines Raidmate-Trainerprofils: ${slug}`,
+    reportBody: (url) => `Ich melde dieses Trainerprofil:\n${url}\n\nDer Grund (z. B. gefälschtes Profil, irreführende Angabe, beleidigender oder illegaler Inhalt, Spam):\n\n`,
+    back: '← Zurück zur Liste',
+    gone: 'Dieser Trainer ist nicht mehr in der Suche.',
+    contacts: {
+      instagram: 'Instagram', facebook: 'Facebook', tiktok: 'TikTok', youtube: 'YouTube',
+      website: 'Website', email: 'E-Mail', phone: 'Telefon',
+    },
+    specialties: {
+      muscle: 'Muskelaufbau', fatloss: 'Fettabbau', powerlifting: 'Kraftdreikampf', beginners: 'Anfänger',
+      women: 'Training für Frauen', seniors: 'Senioren', rehab: 'Training nach Verletzungen', functional: 'Funktionelles Training',
+      running: 'Laufen', nutrition: 'Ernährung',
+    },
+    countries: { HU: 'Ungarn', AT: 'Österreich', SK: 'Slowakei', RO: 'Rumänien', RS: 'Serbien', DE: 'Deutschland' },
   },
 };
 
@@ -170,7 +238,9 @@ const filter = { q: '', mode: 'any', county: '', city: '', specialty: '', langua
 // A „További szűrők” nyitva van-e (újrarajzoláskor is maradjon).
 let moreOpen = false;
 
-const lang = () => (document.documentElement.lang === 'en' ? 'en' : 'hu');
+const lang = () => (T[document.documentElement.lang] ? document.documentElement.lang : 'hu');
+// Szám- és pénzformátum a nyelvhez.
+const numLocale = () => ({ hu: 'hu-HU', de: 'de-DE' })[lang()] || 'en-GB';
 const t = () => T[lang()];
 
 // --------------------------------------------------------------- segédek
@@ -211,7 +281,7 @@ function today() {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
-const money = (n) => new Intl.NumberFormat(lang() === 'hu' ? 'hu-HU' : 'en-GB').format(n);
+const money = (n) => new Intl.NumberFormat(numLocale()).format(n);
 
 /** Biztonságos link egy elérhetőséghez, vagy null. */
 function contactHref(kind, value) {
@@ -276,7 +346,7 @@ function score(c) {
 
 function ratingLine(c) {
   if (!rated(c)) return null;
-  const avg = new Intl.NumberFormat(lang() === 'hu' ? 'hu-HU' : 'en-GB', {
+  const avg = new Intl.NumberFormat(numLocale(), {
     minimumFractionDigits: 1, maximumFractionDigits: 1,
   }).format(c.rating_avg);
   return t().ratingLine(avg, c.rating_count);
@@ -425,7 +495,7 @@ function renderList() {
       filter.mode === 'online' ? null : select(tt.city, 'city', [any, ...cities.map((c) => [c, c])], filter.city, set('city')),
       select(tt.language, 'language', [any, ...languages.map((c) => [c, LANGUAGES[c] ?? c])], filter.language, set('language')),
       select(tt.maxPrice, 'maxPrice', [any, ...PRICES.map((p) => [String(p), tt.priceUpTo(money(p))])], filter.maxPrice, set('maxPrice')),
-      select(tt.minStars, 'minStars', [any, ...STARS.map((v) => [String(v), tt.stars(new Intl.NumberFormat(lang() === 'hu' ? 'hu-HU' : 'en-GB', { minimumFractionDigits: 1 }).format(v))])], filter.minStars, set('minStars')),
+      select(tt.minStars, 'minStars', [any, ...STARS.map((v) => [String(v), tt.stars(new Intl.NumberFormat(numLocale(), { minimumFractionDigits: 1 }).format(v))])], filter.minStars, set('minStars')),
       gyms.length ? select(tt.gym, 'gym', [any, ...gyms.map((g) => [g, g])], filter.gym, set('gym')) : null));
   more.addEventListener('toggle', () => {
     moreOpen = more.open;
