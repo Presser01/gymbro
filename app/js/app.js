@@ -94,7 +94,7 @@ function applyStatic() {
 // ------------------------------------------------- Beállítások (fogaskerék)
 // Tamás kérése (2026-11-11): a ceruzás körbeváltó gomb helyett egy
 // lenyíló panel: stílus, téma, nyelv. A Viking és az Akkukímélő csak
-// sötét, ilyenkor a Világos választhatatlan (eddig összeakadt).
+// sötét, ilyenkor a Téma sor nem látszik (eddig összeakadt).
 const STYLE_KEYS = { plain: 'stylePlain', notebook: 'styleNotebook', viking: 'styleViking', oled: 'styleOled' };
 const LANG_NAMES = { hu: 'Magyar', en: 'English', de: 'Deutsch' };
 
@@ -115,16 +115,15 @@ function fillSettings() {
   const btn = $('#settingsBtn');
   btn.title = t('menuSettings');
   btn.setAttribute('aria-label', t('menuSettings'));
-  const darkOnly = DARK_ONLY.includes(currentStyle());
   options($('#styleSelect'), STYLES.map((st) => [st, t(STYLE_KEYS[st])]), currentStyle());
+  // Csak sötét stílusnál (Viking, Akkukímélő) nincs mit választani: a Téma
+  // sor ilyenkor nem is látszik (Tamás kérése, 2026-11-11).
+  $('#themeRow').hidden = DARK_ONLY.includes(currentStyle());
   options(
     $('#themeSelect'),
-    [['light', t('themeLightOpt'), darkOnly], ['dark', t('themeDarkOpt')]],
+    [['light', t('themeLightOpt')], ['dark', t('themeDarkOpt')]],
     document.documentElement.dataset.theme,
   );
-  const note = $('#themeNote');
-  note.hidden = !darkOnly;
-  note.textContent = darkOnly ? t('themeLocked') : '';
   options($('#langSelect'), LANGS.map((l) => [l, LANG_NAMES[l]]), lang);
 }
 
